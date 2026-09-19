@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile - ShopEase</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f1f3f6;
+            color: #212121;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .profile-navbar {
+            width: 100%;
+            height: 64px;
+            background: #2874f0;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 7%;
+
+            gap: 35px;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+
+        .navbar-left {
+            flex-shrink: 0;
+        }
+
+
+        .shop-logo {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+
+        .shop-logo span {
+            color: #ffe500;
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .navbar-search {
+            height: 44px;
+            background: white;
+
+            width: 590px;
+
+            display: flex;
+            align-items: center;
+
+            border-radius: 2px;
+
+            padding: 0 15px;
+
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+
+        .navbar-search i {
+            color: #2874f0;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+
+        .navbar-search input {
+            width: 100%;
+            height: 100%;
+
+            border: none;
+            outline: none;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           NAV RIGHT
+        ===================================================== */
+
+        .navbar-right {
+            margin-left: auto;
+
+            display: flex;
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        .nav-link {
+            color: white;
+
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            font-size: 15px;
+            font-weight: 500;
+
+            white-space: nowrap;
+        }
+
+
+        .nav-link i {
+            font-size: 17px;
+        }
+
+
+        .nav-link:hover {
+            color: #ffe500;
+        }
+
+
+        .cart-link {
+            position: relative;
+        }
+
+
+        .cart-count {
+            position: absolute;
+
+            top: -12px;
+            right: -12px;
+
+            min-width: 18px;
+            height: 18px;
+
+            background: #ff6161;
+            color: white;
+
+            border-radius: 50%;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .profile-page {
+            width: 90%;
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 20px 0 50px;
+        }
+
+
+        /* =====================================================
+           BREADCRUMB
+        ===================================================== */
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+        }
+
+
+        .breadcrumb a {
+            color: #2874f0;
+        }
+
+
+        .breadcrumb i {
+            color: #878787;
+            font-size: 11px;
+        }
+
+
+        .breadcrumb span {
+            color: #878787;
+        }
+
+
+        /* =====================================================
+           EDIT CARD
+        ===================================================== */
+
+        .edit-container {
+            width: 100%;
+
+            background: white;
+
+            border: 1px solid #e0e0e0;
+
+            padding: 30px 35px;
+
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .edit-header {
+            display: flex;
+            align-items: center;
+
+            gap: 18px;
+
+            padding-bottom: 25px;
+
+            border-bottom: 1px solid #eeeeee;
+
+            margin-bottom: 28px;
+        }
+
+
+        .edit-header-icon {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 50%;
+
+            background: #e8f0fe;
+
+            color: #2874f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+
+        .edit-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+
+        .edit-header p {
+            color: #878787;
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .profile-form {
+            max-width: 850px;
+        }
+
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+
+        .form-group label {
+            font-size: 13px;
+
+            color: #555;
+
+            margin-bottom: 8px;
+
+            font-weight: 500;
+        }
+
+
+        .form-group input {
+            width: 100%;
+
+            height: 48px;
+
+            border: 1px solid #cfcfcf;
+
+            border-radius: 2px;
+
+            padding: 0 14px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+
+        .form-group input:focus {
+            border-color: #2874f0;
+
+            box-shadow: 0 0 0 1px #2874f0;
+        }
+
+
+        .form-group input[readonly] {
+            background: #f5f5f5;
+
+            color: #757575;
+
+            cursor: not-allowed;
+        }
+
+
+        .input-note {
+            margin-top: 7px;
+
+            font-size: 12px;
+
+            color: #878787;
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+
+            gap: 15px;
+
+            padding-top: 10px;
+
+            border-top: 1px solid #eeeeee;
+
+            margin-top: 10px;
+        }
+
+
+        .save-button {
+            border: none;
+
+            background: #fb641b;
+
+            color: white;
+
+            height: 45px;
+
+            padding: 0 32px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            border-radius: 2px;
+
+            transition: 0.2s;
+        }
+
+
+        .save-button:hover {
+            background: #e85a16;
+        }
+
+
+        .cancel-button {
+            height: 45px;
+
+            padding: 0 30px;
+
+            border: 1px solid #2874f0;
+
+            background: white;
+
+            color: #2874f0;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            border-radius: 2px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .cancel-button:hover {
+            background: #f5f8ff;
+        }
+
+
+        /* =====================================================
+           FLASH MESSAGE
+        ===================================================== */
+
+        .flash-message {
+            padding: 13px 16px;
+
+            margin-bottom: 20px;
+
+            border-radius: 2px;
+
+            font-size: 14px;
+        }
+
+
+        .flash-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+
+            border: 1px solid #c8e6c9;
+        }
+
+
+        .flash-error {
+            background: #ffebee;
+            color: #c62828;
+
+            border: 1px solid #ffcdd2;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .profile-footer {
+            background: #172337;
+
+            color: white;
+
+            padding: 30px 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-top: 20px;
+        }
+
+
+        .profile-footer strong {
+            font-size: 22px;
+        }
+
+
+        .profile-footer strong span {
+            color: #ffe500;
+        }
+
+
+        .profile-footer p {
+            color: #bdbdbd;
+
+            font-size: 13px;
+
+            margin-top: 6px;
+        }
+
+
+        .footer-links {
+            display: flex;
+
+            gap: 25px;
+        }
+
+
+        .footer-links a {
+            color: #ddd;
+
+            font-size: 13px;
+        }
+
+
+        .footer-links a:hover {
+            color: #ffe500;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .profile-navbar {
+                padding: 0 3%;
+                gap: 20px;
+            }
+
+
+            .navbar-search {
+                width: 400px;
+            }
+
+
+            .navbar-right {
+                gap: 15px;
+            }
+
+
+            .profile-page {
+                width: 94%;
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .profile-navbar {
+                height: auto;
+
+                padding: 15px;
+
+                flex-wrap: wrap;
+            }
+
+
+            .navbar-search {
+                order: 3;
+
+                width: 100%;
+            }
+
+
+            .navbar-right {
+                margin-left: auto;
+            }
+
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+
+
+            .profile-footer {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 20px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .navbar-right .nav-link {
+                font-size: 0;
+            }
+
+
+            .navbar-right .nav-link i {
+                font-size: 18px;
+            }
+
+
+            .edit-container {
+                padding: 22px 18px;
+            }
+
+
+            .edit-header h1 {
+                font-size: 20px;
+            }
+
+
+            .form-actions {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .save-button,
+            .cancel-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="profile-navbar">
+
+    <div class="navbar-left">
+
+        <a href="{{ url_for('home') }}"
+           class="shop-logo">
+
+            Shop<span>Ease</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="navbar-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input type="text"
+               placeholder="Search for products, brands and more"
+               id="profileSearch">
+
+    </div>
+
+
+    <div class="navbar-right">
+
+        <a href="{{ url_for('home') }}"
+           class="nav-link">
+
+            <i class="fa-solid fa-house"></i>
+
+            Home
+
+        </a>
+
+
+        <a href="/wishlist"
+           class="nav-link">
+
+            <i class="fa-regular fa-heart"></i>
+
+            Wishlist
+
+        </a>
+
+
+        <a href="{{ url_for('cart.cart') }}"
+           class="nav-link cart-link">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            Cart
+
+            <span class="cart-count"
+                  id="cartCount">
+
+                0
+
+            </span>
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="profile-page">
+
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <i class="fa-solid fa-angle-right"></i>
+
+        <a href="{{ url_for('profile') }}">
+            My Account
+        </a>
+
+        <i class="fa-solid fa-angle-right"></i>
+
+        <span>
+            Edit Profile
+        </span>
+
+    </div>
+
+
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash-message
+                    {% if category == 'success' %}
+                        flash-success
+                    {% else %}
+                        flash-error
+                    {% endif %}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- EDIT PROFILE CARD -->
+
+    <div class="edit-container">
+
+
+        <!-- HEADER -->
+
+        <div class="edit-header">
+
+            <div class="edit-header-icon">
+
+                <i class="fa-solid fa-user-pen"></i>
+
+            </div>
+
+            <div>
+
+                <h1>
+                    Edit Profile
+                </h1>
+
+                <p>
+                    Update your personal account information
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FORM -->
+
+        <form method="POST"
+              action="{{ url_for('edit_profile') }}"
+              class="profile-form">
+
+
+            <!-- NAME + EMAIL -->
+
+            <div class="form-row">
+
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           value="{{ user.name or '' }}"
+                           placeholder="Enter your full name"
+                           autocomplete="name"
+                           required>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           value="{{ user.email or '' }}"
+                           readonly>
+
+                    <span class="input-note">
+                        Email address cannot be changed.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Mobile Number
+                    </label>
+
+                    <input type="tel"
+                           id="phone"
+                           name="phone"
+                           value="{{ user.phone or '' }}"
+                           placeholder="Enter your mobile number"
+                           autocomplete="tel"
+                           maxlength="15">
+
+                    <span class="input-note">
+                        Add your mobile number for faster checkout and delivery.
+                    </span>
+
+                </div>
+
+
+                <!-- ACCOUNT TYPE -->
+
+                <div class="form-group">
+
+                    <label for="accountType">
+                        Account Type
+                    </label>
+
+                    <input type="text"
+                           id="accountType"
+                           value="{{ (user.role or 'customer')|capitalize }}"
+                           readonly>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="save-button">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Save Changes
+
+                </button>
+
+
+                <a href="{{ url_for('profile') }}"
+                   class="cancel-button">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="profile-footer">
+
+    <div>
+
+        <strong>
+            Shop<span>Ease</span>
+        </strong>
+
+        <p>
+            Your trusted online shopping destination.
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="/wishlist">
+            Wishlist
+        </a>
+
+        <a href="{{ url_for('cart.cart') }}">
+            Cart
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

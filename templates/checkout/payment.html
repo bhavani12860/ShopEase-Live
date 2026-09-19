@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payment - ShopEase</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- Payment CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='payment.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="payment-header">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="payment-logo"
+    >
+        Shop<span>Ease</span>
+    </a>
+
+
+    <div class="secure-payment">
+
+        <i class="fa-solid fa-lock"></i>
+
+        <span>Secure Payment</span>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN PAYMENT CONTAINER
+===================================================== -->
+
+<main class="payment-container">
+
+
+    <!-- =================================================
+         LEFT SIDE
+    ================================================== -->
+
+    <section class="payment-left">
+
+
+        <!-- =============================================
+             STEP 1 - DELIVERY ADDRESS
+        ============================================== -->
+
+        <div class="payment-card address-card">
+
+
+            <div class="section-header">
+
+                <div class="step-number">
+                    1
+                </div>
+
+
+                <div class="section-title">
+
+                    <h2>
+                        Delivery Address
+                    </h2>
+
+                    <p>
+                        Address saved successfully
+                    </p>
+
+                </div>
+
+
+                <div class="completed-icon">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="divider"></div>
+
+
+            <!-- SAVED ADDRESS -->
+
+            <div class="saved-address">
+
+
+                <div class="address-top">
+
+                    <strong>
+                        {{ address.full_name }}
+                    </strong>
+
+                    <span class="home-badge">
+                        HOME
+                    </span>
+
+                </div>
+
+
+                <p>
+                    {{ address.address }}
+                </p>
+
+
+                <p>
+                    {{ address.city }},
+                    {{ address.state }}
+                    - {{ address.pincode }}
+                </p>
+
+
+                {% if address.landmark %}
+
+                <p class="landmark">
+
+                    <strong>
+                        Landmark:
+                    </strong>
+
+                    {{ address.landmark }}
+
+                </p>
+
+                {% endif %}
+
+
+                <p class="mobile-number">
+
+                    <strong>
+                        Mobile:
+                    </strong>
+
+                    {{ address.phone }}
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             STEP 2 - PAYMENT
+        ============================================== -->
+
+        <div class="payment-card">
+
+
+            <div class="section-header">
+
+                <div class="step-number">
+                    2
+                </div>
+
+
+                <div class="section-title">
+
+                    <h2>
+                        Payment Method
+                    </h2>
+
+                    <p>
+                        Choose your preferred payment method
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="divider"></div>
+
+
+            <!-- =========================================
+                 PAYMENT FORM
+            ========================================== -->
+
+            <form
+                id="paymentForm"
+                method="POST"
+                action="{{ url_for('checkout.place_order') }}"
+            >
+
+
+                <!-- ADDRESS ID -->
+
+                <input
+                    type="hidden"
+                    name="address_id"
+                    value="{{ address.id }}"
+                >
+
+
+
+                <!-- =====================================
+                     CASH ON DELIVERY
+                ====================================== -->
+
+                <label
+                    class="payment-option selected"
+                    for="cod"
+                >
+
+
+                    <div class="payment-option-content">
+
+
+                        <div class="payment-icon cod-icon">
+
+                            <i class="fa-solid fa-money-bill-wave"></i>
+
+                        </div>
+
+
+                        <div class="payment-info">
+
+                            <h3>
+                                Cash on Delivery
+                            </h3>
+
+                            <p>
+                                Pay when your order arrives
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <input
+                        type="radio"
+                        id="cod"
+                        name="payment_method"
+                        value="COD"
+                        checked
+                    >
+
+                </label>
+
+
+
+                <!-- =====================================
+                     UPI
+                ====================================== -->
+
+                <label
+                    class="payment-option"
+                    for="upi"
+                >
+
+
+                    <div class="payment-option-content">
+
+
+                        <div class="payment-icon upi-icon">
+
+                            <span>
+                                UPI
+                            </span>
+
+                        </div>
+
+
+                        <div class="payment-info">
+
+                            <h3>
+                                UPI
+                            </h3>
+
+                            <p>
+                                Pay securely using UPI
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <input
+                        type="radio"
+                        id="upi"
+                        name="payment_method"
+                        value="UPI"
+                    >
+
+                </label>
+
+
+<!-- =====================================
+     UPI DETAILS
+===================================== -->
+
+<div
+    id="upiDetails"
+    class="payment-details"
+>
+
+    <label for="upi_id">
+        UPI ID
+    </label>
+
+    <input
+        type="text"
+        id="upi_id"
+        name="upi_id"
+        placeholder="example@upi"
+        autocomplete="off"
+    >
+
+    <p class="field-help">
+
+        <i class="fa-solid fa-circle-info"></i>
+
+        Enter your valid UPI ID
+
+    </p>
+
+</div>
+
+
+
+                <!-- =====================================
+                     CREDIT / DEBIT CARD
+                ====================================== -->
+
+                <label
+                    class="payment-option"
+                    for="card"
+                >
+
+
+                    <div class="payment-option-content">
+
+
+                        <div class="payment-icon card-icon">
+
+                            <i class="fa-regular fa-credit-card"></i>
+
+                        </div>
+
+
+                        <div class="payment-info">
+
+                            <h3>
+                                Credit / Debit Card
+                            </h3>
+
+                            <p>
+                                Visa, Mastercard, RuPay
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <input
+                        type="radio"
+                        id="card"
+                        name="payment_method"
+                        value="CARD"
+                    >
+
+                </label>
+
+
+
+                <!-- =====================================
+                     CARD DETAILS
+                ====================================== -->
+
+                <div
+                    id="cardDetails"
+                    class="payment-details"
+                >
+
+
+                    <div class="form-field">
+
+                        <label for="card_number">
+                            Card Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="card_number"
+                            name="card_number"
+                            maxlength="19"
+                            placeholder="1234 5678 9012 3456"
+                            inputmode="numeric"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+
+                    <div class="card-row">
+
+
+                        <div class="form-field">
+
+                            <label for="expiry">
+                                Expiry Date
+                            </label>
+
+                            <input
+                                type="text"
+                                id="expiry"
+                                name="expiry"
+                                maxlength="5"
+                                placeholder="MM/YY"
+                                inputmode="numeric"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="cvv">
+                                CVV
+                            </label>
+
+                            <input
+                                type="password"
+                                id="cvv"
+                                name="cvv"
+                                maxlength="3"
+                                placeholder="•••"
+                                inputmode="numeric"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="secure-card-message">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Your card details are used only for this demo payment.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- =====================================
+                     PLACE ORDER
+                ====================================== -->
+
+                <button
+                    type="submit"
+                    class="place-order-btn"
+                >
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <span>
+                        Place Order
+                    </span>
+
+                    <strong>
+                        ₹{{ "{:,.2f}".format(total_amount or 0) }}
+                    </strong>
+
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         RIGHT SIDE - ORDER SUMMARY
+    ================================================== -->
+
+    <aside class="payment-right">
+
+
+        <div class="payment-card summary-card">
+
+
+            <h2 class="summary-title">
+                Order Summary
+            </h2>
+
+
+            <div class="divider"></div>
+
+
+
+            <!-- =========================================
+                 PRODUCTS
+            ========================================== -->
+
+            <div class="summary-products">
+
+
+                {% if cart_items %}
+
+
+                    {% for item in cart_items %}
+
+
+                    <div class="summary-product">
+
+
+                        <div class="summary-image">
+
+
+                            {% if item.image %}
+
+                                {% if item.image.startswith('/static/') %}
+
+                                    <img
+                                        src="{{ item.image }}"
+                                        alt="{{ item.name }}"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                    >
+
+                                {% else %}
+
+                                    <img
+                                        src="{{ url_for('static', filename=item.image) }}"
+                                        alt="{{ item.name }}"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                    >
+
+                                {% endif %}
+
+                            {% endif %}
+
+
+                            <div class="image-fallback">
+
+                                <i class="fa-solid fa-box"></i>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="summary-product-info">
+
+                            <h3>
+                                {{ item.name }}
+                            </h3>
+
+
+                            <p>
+                                Qty: {{ item.quantity }}
+                            </p>
+
+
+                            <strong>
+                                ₹{{ "{:,.2f}".format(item.item_total) }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <div class="empty-summary">
+
+                        <i class="fa-solid fa-cart-shopping"></i>
+
+                        <p>
+                            Your cart is empty.
+                        </p>
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- =========================================
+                 PRICE DETAILS
+            ========================================== -->
+
+            <div class="price-details">
+
+
+                <div class="price-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        ₹{{ "{:,.2f}".format(subtotal or 0) }}
+                    </strong>
+
+                </div>
+
+
+                <div class="price-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong class="free">
+                        FREE
+                    </strong>
+
+                </div>
+
+
+                <div class="price-row">
+
+                    <span>
+                        Discount
+                    </span>
+
+                    <strong class="discount">
+                        - ₹{{ "{:,.2f}".format(discount or 0) }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- TOTAL -->
+
+            <div class="total-row">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <strong>
+                    ₹{{ "{:,.2f}".format(total_amount or 0) }}
+                </strong>
+
+            </div>
+
+
+
+            <!-- SECURITY -->
+
+            <div class="security-message">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+                    Safe and secure payment with ShopEase
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+</main>
+
+
+
+<!-- PAYMENT JS -->
+
+<script
+    src="{{ url_for('static', filename='payment.js') }}">
+</script>
+
+
+</body>
+
+</html>

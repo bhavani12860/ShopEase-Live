@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if category and category|lower != "all" %}
+            {{ category }} Products - ShopEase
+        {% else %}
+            All Products - ShopEase
+        {% endif %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+    <script>
+    const SHOP_EASE_USER_ID =
+        {{ session.get("user_id", "guest")|tojson }};
+</script>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='products.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="shop-navbar">
+
+    <div class="shop-navbar-inner">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="{{ url_for('home') }}"
+            class="shop-logo"
+        >
+            Shop<span>Ease</span>
+        </a>
+
+
+
+        <!-- SEARCH -->
+
+        <form
+            class="shop-search"
+            action="{{ url_for('products') }}"
+            method="GET"
+        >
+
+            <input
+                type="text"
+                name="search"
+                id="searchInput"
+                value="{{ request.args.get('search', '') }}"
+                placeholder="Search for products, brands and more"
+                autocomplete="off"
+            >
+
+
+            {% if category and category|lower != "all" %}
+
+                <input
+                    type="hidden"
+                    name="category"
+                    value="{{ category }}"
+                >
+
+            {% endif %}
+
+
+            <button
+                type="submit"
+                aria-label="Search"
+            >
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </button>
+
+        </form>
+
+<!-- =========================================================
+     ACCOUNT / LOGIN / REGISTER
+========================================================= -->
+
+{% if session.get("user_id") %}
+
+    <!-- LOGGED IN USER -->
+
+    <a
+        href="{{ url_for('profile') }}"
+        class="shop-nav-link account-link"
+    >
+
+        <i class="fa-regular fa-user"></i>
+
+        <div>
+
+            <small>Hello,</small>
+
+            <strong>
+                {{ session.get("user_name", "Account") }}
+            </strong>
+
+        </div>
+
+    </a>
+
+{% else %}
+
+    <!-- LOGIN -->
+
+    <a
+        href="{{ url_for('login') }}"
+        class="shop-nav-link login-link"
+    >
+
+        <i class="fa-regular fa-user"></i>
+
+        <strong>
+            Login
+        </strong>
+
+    </a>
+
+
+    <!-- REGISTER -->
+
+    <a
+        href="{{ url_for('register') }}"
+        class="shop-nav-link register-link"
+    >
+
+        <i class="fa-solid fa-user-plus"></i>
+
+        <strong>
+            Register
+        </strong>
+
+    </a>
+
+{% endif %}
+
+
+
+      <a
+    href="{{ url_for('wishlist') }}"
+    class="shop-nav-link wishlist-link"
+>
+
+    <div class="wishlist-icon-wrapper">
+
+        <i class="fa-regular fa-heart"></i>
+
+        <span
+            class="wishlist-count"
+            id="wishlistCount"
+        >
+            0
+        </span>
+
+    </div>
+
+    <div>
+
+        <small>&nbsp;</small>
+
+        <strong>
+            Wishlist
+        </strong>
+
+    </div>
+
+</a>
+
+
+        <!-- CART -->
+
+        <a
+            href="{{ url_for('cart') }}"
+            class="shop-nav-link cart-link"
+        >
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            <div>
+
+                <small>&nbsp;</small>
+
+                <strong>
+                    Cart
+                </strong>
+
+            </div>
+
+
+            <span
+                class="cart-count"
+                id="cartCount"
+            >
+                0
+            </span>
+
+        </a>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     CATEGORY BAR
+========================================================= -->
+
+<nav class="shop-category-bar">
+
+    <div class="shop-category-inner">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('products', category='Mobiles') }}">
+            Mobiles
+        </a>
+
+        <a href="{{ url_for('products', category='Electronics') }}">
+            Electronics
+        </a>
+
+        <a href="{{ url_for('products', category='Fashion') }}">
+            Fashion
+        </a>
+
+        <a href="{{ url_for('products', category='Footwear') }}">
+            Footwear
+        </a>
+
+        <a href="{{ url_for('products', category='Home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('products', category='Beauty') }}">
+            Beauty
+        </a>
+
+        <a href="{{ url_for('products', category='Books') }}">
+            Books
+        </a>
+
+        <a href="{{ url_for('products', category='Grocery') }}">
+            Grocery
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================================
+     PRODUCTS PAGE
+========================================================= -->
+
+<main class="shop-products-page">
+
+
+    <!-- BREADCRUMB -->
+
+    <div class="shop-breadcrumb">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <span>›</span>
+
+        <strong>
+
+            {% if category and category|lower != "all" %}
+                {{ category }}
+            {% else %}
+                All Products
+            {% endif %}
+
+        </strong>
+
+    </div>
+
+
+
+    <!-- HEADER -->
+
+    <div class="shop-products-header">
+
+        <div>
+
+            <h1>
+
+                {% if category and category|lower != "all" %}
+                    {{ category }}
+                {% else %}
+                    All Products
+                {% endif %}
+
+            </h1>
+
+            <p>
+                {{ products|length }} products found
+            </p>
+
+        </div>
+
+
+        <div class="sort-box">
+
+            <label for="sortProducts">
+                Sort By
+            </label>
+
+            <select id="sortProducts">
+
+                <option value="relevance">
+                    Relevance
+                </option>
+
+                <option value="low">
+                    Price -- Low to High
+                </option>
+
+                <option value="high">
+                    Price -- High to Low
+                </option>
+
+                <option value="rating">
+                    Customer Rating
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PRODUCTS
+    ====================================================== -->
+
+    {% if products %}
+
+        <div
+            class="shop-product-grid"
+            id="productGrid"
+        >
+
+            {% for product in products %}
+
+                <article
+                    class="shop-product-card"
+
+                    data-product-id="{{ product.id }}"
+
+                    data-product-name="{{ product.name|e }}"
+
+                    data-product-price="{{ product.price|default(0)|float }}"
+
+                    data-product-image="{{ product.image|default('')|e }}"
+
+                    data-price="{{ product.price|default(0)|float }}"
+
+                    data-rating="{{ product.rating|default(0)|float }}"
+                >
+
+
+                    <!-- DISCOUNT -->
+
+                    {% if product.discount %}
+
+                        <span class="shop-discount">
+                            {{ product.discount }}
+                        </span>
+
+                    {% endif %}
+
+
+
+                    <!-- IMAGE -->
+
+                    <div class="shop-product-image">
+
+                        {% if product.image %}
+
+                           <img
+    src="{% if product.image and (product.image.startswith('http://') or product.image.startswith('https://') or product.image.startswith('/static/')) %}{{ product.image }}{% elif product.image %}/static/uploads/products/{{ product.image }}{% endif %}"
+    alt="{{ product.name }}"
+    class="product-image"
+    loading="lazy"
+    decoding="async"
+    onerror="handleImageError(this)"
+>
+
+                        {% else %}
+
+                            <div class="shop-product-icon">
+
+                                <i class="fa-solid fa-box"></i>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- PRODUCT INFO -->
+
+                    <div class="shop-product-info">
+
+
+                        <div class="shop-product-category">
+
+                            {{ product.category|default('Product') }}
+
+                        </div>
+
+
+
+                        <h2 class="shop-product-name">
+
+                            {{ product.name }}
+
+                        </h2>
+
+
+
+                        <!-- RATING -->
+
+                        <div class="shop-rating">
+
+                            <span class="rating-badge">
+
+                                {{ product.rating|default(0)|float }}
+
+                                <i class="fa-solid fa-star"></i>
+
+                            </span>
+
+                            <span class="rating-text">
+                                Customer Rating
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- PRICE -->
+
+                        <div class="shop-price-area">
+
+                            <span class="shop-current-price">
+
+                                ₹{{ "{:,.0f}".format(product.price|float) }}
+
+                            </span>
+
+
+                            {% if product.old_price %}
+
+                                <span class="shop-old-price">
+
+                                    ₹{{ "{:,.0f}".format(product.old_price|float) }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <!-- STOCK -->
+
+                        {% if product.stock is defined %}
+
+                            {% if product.stock|int > 0 %}
+
+                                <div class="shop-stock available">
+
+                                    <i class="fa-solid fa-circle-check"></i>
+
+                                    In Stock
+
+                                </div>
+
+                            {% else %}
+
+                                <div class="shop-stock unavailable">
+
+                                    <i class="fa-solid fa-circle-xmark"></i>
+
+                                    Out of Stock
+
+                                </div>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <div class="shop-stock available">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                                In Stock
+
+                                </div>
+
+                        {% endif %}
+
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="shop-product-actions">
+
+
+                            <!-- ADD CART -->
+
+                            <button
+                                type="button"
+                                class="shop-add-cart"
+                                data-action="add-cart"
+                            >
+
+                                <i class="fa-solid fa-cart-shopping"></i>
+
+                                Add to Cart
+
+                            </button>
+
+
+
+                            <!-- WISHLIST -->
+
+                            <button
+                                type="button"
+                                class="shop-wishlist"
+                                data-action="wishlist"
+                                aria-label="Add to wishlist"
+                            >
+
+                                <i class="fa-regular fa-heart"></i>
+
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+
+
+        <!-- LOAD MORE -->
+
+        {% if products|length > 8 %}
+
+            <div class="shop-load-more">
+
+                <button
+                    type="button"
+                    id="loadMoreBtn"
+                >
+                    Load More
+                </button>
+
+            </div>
+
+        {% endif %}
+
+
+
+    {% else %}
+
+
+        <div class="shop-no-products">
+
+            <div class="no-products-icon">
+
+                <i class="fa-solid fa-box-open"></i>
+
+            </div>
+
+            <h2>
+                No products found
+            </h2>
+
+            <p>
+                There are no products available in this category.
+            </p>
+
+            <a
+                href="{{ url_for('products', category='all') }}"
+            >
+                View All Products
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   IMAGE URL
+========================================================= */
+
+function getCorrectImageUrl(image) {
+
+    if (!image) {
+        return "";
+    }
+
+    image = String(image).trim();
+
+    if (!image) {
+        return "";
+    }
+
+    /*
+       Already a complete URL
+    */
+
+    if (
+        image.startsWith("http://") ||
+        image.startsWith("https://") ||
+        image.startsWith("/static/") ||
+        image.startsWith("data:")
+    ) {
+
+        return image;
+
+    }
+
+
+    /*
+       Database contains only:
+       product_59.jpg
+    */
+
+    return "/static/uploads/products/" + image;
+
+}
+
+
+
+/* =========================================================
+   CART
+========================================================= */
+function getCart() {
+
+    try {
+
+        const storageKey =
+            "shopEaseCart_user_" +
+            String(SHOP_EASE_USER_ID);
+
+        const savedCart =
+            localStorage.getItem(storageKey);
+
+        if (!savedCart) {
+            return [];
+        }
+
+        const cart =
+            JSON.parse(savedCart);
+
+        return Array.isArray(cart)
+            ? cart
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Cart loading error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function saveCart(cart) {
+
+    const storageKey =
+        "shopEaseCart_user_" +
+        String(SHOP_EASE_USER_ID);
+
+    localStorage.setItem(
+        storageKey,
+        JSON.stringify(cart)
+    );
+
+}
+
+
+function updateCartCount() {
+
+    const element =
+        document.getElementById("cartCount");
+
+    if (!element) {
+        return;
+    }
+
+    fetch("/cart/count")
+        .then(response => response.json())
+        .then(data => {
+
+            element.textContent =
+                data.count || 0;
+
+        })
+        .catch(error => {
+
+            console.error(
+                "Cart count error:",
+                error
+            );
+
+            element.textContent = 0;
+
+        });
+}
+
+
+/* =========================================================
+   ADD TO CART
+========================================================= */
+
+function addProductToCart(card) {
+
+    if (!card) {
+        return;
+    }
+
+    const id =
+        Number(card.dataset.productId);
+
+    const name =
+        card.dataset.productName || "Product";
+
+    const price =
+        Number(card.dataset.productPrice || 0);
+
+    const image =
+        getCorrectImageUrl(
+            card.dataset.productImage
+        );
+
+
+    if (!id) {
+
+        alert("Product ID is missing.");
+
+        return;
+
+    }
+
+
+    let cart =
+        getCart();
+
+
+    const existing =
+        cart.find(function(item) {
+
+            return Number(item.id) === id;
+
+        });
+
+
+    if (existing) {
+
+        existing.quantity =
+            Number(existing.quantity || 1) + 1;
+
+        /*
+           Update image if old cart item
+           did not have one
+        */
+
+        if (!existing.image && image) {
+            existing.image = image;
+        }
+
+    } else {
+
+        cart.push({
+
+            id: id,
+
+            name: name,
+
+            price: price,
+
+            image: image,
+
+            quantity: 1
+
+        });
+
+    }
+
+saveCart(cart);
+
+updateCartCount();
+
+syncCartToDatabase();
+
+alert(
+    name + " added to cart!"
+);
+
+function syncCartToDatabase() {
+
+    const cart =
+        getCart();
+
+    fetch("/cart/sync", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            items: cart
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        if (!data.success) {
+
+            console.error(
+                "Cart sync failed:",
+                data.message
+            );
+
+            return;
+        }
+
+        updateCartCount();
+
+    })
+    .catch(error => {
+
+        console.error(
+            "Cart sync error:",
+            error
+        );
+
+    });
+}
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+function getWishlist() {
+
+    try {
+
+        const storageKey =
+            "shopEaseWishlist_user_" +
+            String(SHOP_EASE_USER_ID);
+
+        const saved =
+            localStorage.getItem(storageKey);
+
+        if (!saved) {
+            return [];
+        }
+
+        const wishlist =
+            JSON.parse(saved);
+
+        return Array.isArray(wishlist)
+            ? wishlist
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Wishlist loading error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function saveWishlist(wishlist) {
+
+    const storageKey =
+        "shopEaseWishlist_user_" +
+        String(SHOP_EASE_USER_ID);
+
+    localStorage.setItem(
+        storageKey,
+        JSON.stringify(wishlist)
+    );
+
+}
+/* =========================================================
+   WISHLIST COUNT
+   ========================================================= */
+
+/* =========================================================
+   WISHLIST COUNT
+========================================================= */
+/* =========================================================
+   WISHLIST COUNT
+========================================================= */
+
+function updateWishlistCount() {
+
+    const wishlist = getWishlist();
+
+    document
+        .querySelectorAll(
+            "#wishlistCount, .wishlist-count"
+        )
+        .forEach(element => {
+
+            element.textContent =
+                wishlist.length;
+
+        });
+}
+
+
+/* =========================================================
+   TOGGLE WISHLIST
+========================================================= */
+
+function toggleWishlist(card, button) {
+
+    if (!card || !button) {
+        return;
+    }
+
+
+    const id =
+        Number(card.dataset.productId);
+
+
+    const name =
+        card.dataset.productName || "Product";
+
+
+    const price =
+        Number(card.dataset.productPrice || 0);
+
+
+    /*
+       VERY IMPORTANT
+
+       Get ACTUAL image URL
+       from product card.
+    */
+
+    const image =
+        getCorrectImageUrl(
+            card.dataset.productImage
+        );
+
+
+    if (!id) {
+
+        alert(
+            "Product ID is missing."
+        );
+
+        return;
+
+    }
+
+
+    let wishlist =
+        getWishlist();
+
+
+    const index =
+        wishlist.findIndex(function(item) {
+
+            return Number(item.id) === id;
+
+        });
+
+
+    const icon =
+        button.querySelector("i");
+
+
+    /* =====================================================
+       ADD
+    ====================================================== */
+
+    if (index === -1) {
+
+        wishlist.push({
+
+            id: id,
+
+            name: name,
+
+            price: price,
+
+            image: image
+
+        });
+
+
+        button.classList.add(
+            "active"
+        );
+
+
+        if (icon) {
+
+            icon.classList.remove(
+                "fa-regular"
+            );
+
+            icon.classList.add(
+                "fa-solid"
+            );
+
+        }
+
+
+        alert(
+            name +
+            " added to Wishlist!"
+        );
+
+    }
+
+
+    /* =====================================================
+       REMOVE
+    ====================================================== */
+
+    else {
+
+        wishlist.splice(
+            index,
+            1
+        );
+
+
+        button.classList.remove(
+            "active"
+        );
+
+
+        if (icon) {
+
+            icon.classList.remove(
+                "fa-solid"
+            );
+
+            icon.classList.add(
+                "fa-regular"
+            );
+
+        }
+
+    }
+
+
+   saveWishlist(wishlist);
+
+   updateWishlistCount();
+
+}
+
+
+/* =========================================================
+   RESTORE WISHLIST
+========================================================= */
+
+function restoreWishlistButtons() {
+
+    const wishlist =
+        getWishlist();
+
+
+    const cards =
+        document.querySelectorAll(
+            ".shop-product-card"
+        );
+
+
+    cards.forEach(function(card) {
+
+        const id =
+            Number(card.dataset.productId);
+
+
+        const button =
+            card.querySelector(
+                ".shop-wishlist"
+            );
+
+
+        if (!button) {
+            return;
+        }
+
+
+        const icon =
+            button.querySelector("i");
+
+
+        const exists =
+            wishlist.some(function(item) {
+
+                return Number(item.id) === id;
+
+            });
+
+
+        if (exists) {
+
+            button.classList.add(
+                "active"
+            );
+
+
+            if (icon) {
+
+                icon.classList.remove(
+                    "fa-regular"
+                );
+
+                icon.classList.add(
+                    "fa-solid"
+                );
+
+            }
+
+        }
+
+    });
+
+}
+
+
+
+/* =========================================================
+   SORT
+========================================================= */
+
+function sortProducts(type) {
+
+    const grid =
+        document.getElementById(
+            "productGrid"
+        );
+
+
+    if (!grid) {
+        return;
+    }
+
+
+    const cards =
+        Array.from(
+            grid.querySelectorAll(
+                ".shop-product-card"
+            )
+        );
+
+
+    if (type === "low") {
+
+        cards.sort(function(a, b) {
+
+            return Number(a.dataset.price)
+                -
+                Number(b.dataset.price);
+
+        });
+
+    }
+
+    else if (type === "high") {
+
+        cards.sort(function(a, b) {
+
+            return Number(b.dataset.price)
+                -
+                Number(a.dataset.price);
+
+        });
+
+    }
+
+    else if (type === "rating") {
+
+        cards.sort(function(a, b) {
+
+            return Number(b.dataset.rating)
+                -
+                Number(a.dataset.rating);
+
+        });
+
+    }
+
+
+    cards.forEach(function(card) {
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+
+/* =========================================================
+   LOAD MORE
+========================================================= */
+
+let visibleProducts = 8;
+
+
+function loadMoreProducts() {
+
+    const grid =
+        document.getElementById(
+            "productGrid"
+        );
+
+
+    if (!grid) {
+        return;
+    }
+
+
+    const cards =
+        Array.from(
+            grid.querySelectorAll(
+                ".shop-product-card"
+            )
+        );
+
+
+    visibleProducts += 8;
+
+
+    cards.forEach(function(card, index) {
+
+        if (index < visibleProducts) {
+
+            card.style.display = "";
+
+        }
+
+    });
+
+
+    const button =
+        document.getElementById(
+            "loadMoreBtn"
+        );
+
+
+    if (
+        button &&
+        visibleProducts >= cards.length
+    ) {
+
+        button.style.display =
+            "none";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   IMAGE ERROR
+========================================================= */
+
+function handleImageError(image) {
+
+    if (!image) {
+        return;
+    }
+
+
+    const container =
+        image.parentElement;
+
+
+    if (!container) {
+        return;
+    }
+
+
+    image.style.display =
+        "none";
+
+
+    if (
+        container.querySelector(
+            ".shop-product-icon"
+        )
+    ) {
+        return;
+    }
+
+
+    const fallback =
+        document.createElement("div");
+
+
+    fallback.className =
+        "shop-product-icon";
+
+
+    fallback.innerHTML =
+        '<i class="fa-solid fa-box-open"></i>';
+
+
+    container.appendChild(
+        fallback
+    );
+
+}
+
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+
+        /* CART COUNT */
+
+        updateCartCount();
+        updateWishlistCount();
+
+
+
+        /* PRODUCT CARDS */
+
+        const cards =
+            Array.from(
+                document.querySelectorAll(
+                    ".shop-product-card"
+                )
+            );
+
+
+
+        /* HIDE AFTER 8 */
+
+        cards.forEach(
+            function(card, index) {
+
+                if (index >= 8) {
+
+                    card.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+
+        /* RESTORE WISHLIST */
+
+        restoreWishlistButtons();
+
+
+
+        /* IMAGE ERROR */
+
+        document
+            .querySelectorAll(".product-image")
+            .forEach(function(image) {
+
+                image.addEventListener(
+                    "error",
+                    function() {
+
+                        handleImageError(
+                            image
+                        );
+
+                    }
+                );
+
+            });
+
+
+
+        /* PRODUCT CLICK */
+
+        cards.forEach(function(card) {
+
+            card.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target.closest(
+                            "button"
+                        )
+                    ) {
+                        return;
+                    }
+
+
+                    const id =
+                        card.dataset.productId;
+
+
+                    if (!id) {
+                        return;
+                    }
+
+
+                    window.location.href =
+                        "/product/" + id;
+
+                }
+            );
+
+        });
+
+
+
+        /* ADD CART */
+
+        document
+            .querySelectorAll(
+                '[data-action="add-cart"]'
+            )
+            .forEach(function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+
+                        const card =
+                            button.closest(
+                                ".shop-product-card"
+                            );
+
+
+                        addProductToCart(
+                            card
+                        );
+
+                    }
+                );
+
+            });
+
+
+
+        /* WISHLIST */
+
+        document
+            .querySelectorAll(
+                '[data-action="wishlist"]'
+            )
+            .forEach(function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+
+                        const card =
+                            button.closest(
+                                ".shop-product-card"
+                            );
+
+
+                        toggleWishlist(
+                            card,
+                            button
+                        );
+
+                    }
+                );
+
+            });
+
+
+
+        /* SORT */
+
+        const sortSelect =
+            document.getElementById(
+                "sortProducts"
+            );
+
+
+        if (sortSelect) {
+
+            sortSelect.addEventListener(
+                "change",
+                function() {
+
+                    sortProducts(
+                        this.value
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* LOAD MORE */
+
+        const loadMore =
+            document.getElementById(
+                "loadMoreBtn"
+            );
+
+
+        if (loadMore) {
+
+            loadMore.addEventListener(
+                "click",
+                loadMoreProducts
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

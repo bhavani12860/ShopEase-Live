@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - ShopEase</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Profile CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='profile.css') }}">
+          <script>
+    const SHOP_EASE_USER_ID =
+        {{ session.get("user_id", "guest")|tojson }};
+</script>
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="profile-navbar">
+
+    <div class="navbar-left">
+
+        <a href="{{ url_for('home') }}"
+           class="shop-logo">
+
+            Shop<span>Ease</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="navbar-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input type="text"
+               id="profileSearch"
+               placeholder="Search for products, brands and more">
+
+    </div>
+
+
+    <div class="navbar-right">
+
+        <a href="{{ url_for('home') }}"
+           class="nav-link">
+
+            <i class="fa-solid fa-house"></i>
+
+            Home
+
+        </a>
+
+<a href="/wishlist"
+   class="nav-link wishlist-nav">
+
+    <span class="nav-icon-wrapper">
+
+        <i class="fa-regular fa-heart"></i>
+
+        <span id="wishlistCount"
+              class="nav-count wishlist-count">
+            0
+        </span>
+
+    </span>
+
+    Wishlist
+
+</a>
+
+       <a href="{{ url_for('cart.cart') }}"
+   class="nav-link cart-link cart-nav">
+
+    <span class="nav-icon-wrapper">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span id="cartCount"
+              class="nav-count cart-count">
+            0
+        </span>
+
+    </span>
+
+    Cart
+
+</a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<main class="profile-page">
+
+
+    <!-- =================================================
+         BREADCRUMB
+    ================================================= -->
+
+    <div class="breadcrumb">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <i class="fa-solid fa-angle-right"></i>
+
+        <span>
+            My Account
+        </span>
+
+    </div>
+
+
+
+    <!-- =================================================
+         ACCOUNT LAYOUT
+    ================================================= -->
+
+    <div class="account-layout">
+
+
+        <!-- =================================================
+             LEFT SIDEBAR
+        ================================================= -->
+
+        <aside class="account-sidebar">
+
+
+            <!-- USER CARD -->
+
+            <div class="user-card">
+
+                <div class="user-avatar">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+
+                <div class="user-info">
+
+                    <span class="hello-text">
+                        Hello,
+                    </span>
+
+                    <strong>
+                        {{ session.get("user_name", "ShopEase User") }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MY ORDERS
+            ================================================= -->
+
+            <a href="/orders/"
+               class="sidebar-item">
+
+                <div class="sidebar-icon">
+
+                    <i class="fa-solid fa-box"></i>
+
+                </div>
+
+                <div class="sidebar-text">
+
+                    <span>
+                        My Orders
+                    </span>
+
+                    <small>
+                        Track and manage your orders
+                    </small>
+
+                </div>
+
+                <i class="fa-solid fa-angle-right arrow"></i>
+
+            </a>
+
+
+
+            <!-- =================================================
+                 ACCOUNT SETTINGS
+            ================================================= -->
+
+            <div class="sidebar-section">
+
+
+                <div class="section-heading">
+
+                    <i class="fa-solid fa-user-gear"></i>
+
+                    ACCOUNT SETTINGS
+
+                </div>
+
+
+                <a href="#personal"
+                   class="sidebar-link active"
+                   data-section="personal">
+
+                    <i class="fa-regular fa-user"></i>
+
+                    Personal Information
+
+                </a>
+
+
+                <a href="#addresses"
+                   class="sidebar-link"
+                   data-section="addresses">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    Manage Addresses
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MY STUFF
+            ================================================= -->
+
+            <div class="sidebar-section">
+
+
+                <div class="section-heading">
+
+                    <i class="fa-solid fa-star"></i>
+
+                    MY STUFF
+
+                </div>
+
+
+                <a href="/wishlist"
+                   class="sidebar-link">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                    My Wishlist
+
+                </a>
+
+
+                <a href="{{ url_for('cart.cart') }}"
+                   class="sidebar-link">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    My Cart
+
+                </a>
+
+
+                <a href="{{ url_for('home') }}"
+                   class="sidebar-link">
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                    Continue Shopping
+
+                </a>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LOGOUT
+            ================================================= -->
+
+            <a href="{{ url_for('logout') }}"
+               class="logout-link">
+
+                <i class="fa-solid fa-power-off"></i>
+
+                Logout
+
+            </a>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             RIGHT CONTENT
+        ================================================= -->
+
+        <section class="account-content">
+
+
+            <!-- =================================================
+                 PERSONAL INFORMATION
+            ================================================= -->
+
+            <div class="content-card"
+                 id="personal">
+
+
+                <div class="content-header">
+
+                    <div>
+
+                        <h2>
+                            Personal Information
+                        </h2>
+
+                        <p>
+                            Manage your personal account details
+                        </p>
+
+                    </div>
+
+
+                   <a href="{{ url_for('edit_profile') }}"
+   class="edit-button">
+
+    <i class="fa-solid fa-pen"></i>
+    Edit
+
+</a>
+
+                </div>
+
+
+
+                <!-- VIEW MODE -->
+
+                <div id="profileView"
+                     class="profile-details">
+
+
+                    <div class="detail-group">
+
+                        <label>
+                            Full Name
+                        </label>
+
+                        <div class="detail-value">
+
+                            {{ session.get("user_name", "Not available") }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-group">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <div class="detail-value">
+
+                            {{ session.get("user_email", "Not available") }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-group">
+
+                        <label>
+                            Account Type
+                        </label>
+
+                        <div class="detail-value">
+
+                            {{ session.get("user_role", "customer")|capitalize }}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- EDIT MODE -->
+
+                <form id="profileEditForm"
+                      class="profile-edit-form"
+                      style="display:none;">
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="editName">
+                                Full Name
+                            </label>
+
+                            <input type="text"
+                                   id="editName"
+                                   value="{{ session.get('user_name', '') }}"
+                                   autocomplete="name">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="editEmail">
+                                Email Address
+                            </label>
+
+                            <input type="email"
+                                   id="editEmail"
+                                   value="{{ session.get('user_email', '') }}"
+                                   readonly>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="edit-actions">
+
+                        <button type="button"
+                                id="cancelEdit"
+                                class="cancel-button">
+
+                            Cancel
+
+                        </button>
+
+
+                        <button type="button"
+                                id="saveProfile"
+                                class="save-button">
+
+                            Save
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MOBILE NUMBER
+            ================================================= -->
+
+            <div class="content-card">
+
+
+                <div class="content-header">
+
+                    <div>
+
+                        <h2>
+                            Mobile Number
+                        </h2>
+
+                        <p>
+                            Your registered mobile number
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="phone-box">
+
+                    <div class="phone-icon">
+
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="phone-label">
+                            Registered Mobile
+                        </span>
+
+                        <strong>
+                            {% if session.get("user_phone") %}
+                                {{ session.get("user_phone") }}
+                            {% else %}
+                                Not added
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MY ORDERS / WISHLIST / CART
+            ================================================= -->
+
+            <div class="quick-section">
+
+
+                <h2>
+                    My Shopping
+                </h2>
+
+
+                <div class="quick-grid">
+
+
+                    <!-- ORDERS -->
+
+                    <a href="/orders/"
+                       class="quick-card">
+
+                        <div class="quick-icon">
+
+                            <i class="fa-solid fa-box-open"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                My Orders
+                            </h3>
+
+                            <p>
+                                View and track your orders
+                            </p>
+
+                        </div>
+
+                        <i class="fa-solid fa-angle-right quick-arrow"></i>
+
+                    </a>
+
+
+
+                    <!-- WISHLIST -->
+
+                    <a href="/wishlist"
+                       class="quick-card">
+
+                        <div class="quick-icon">
+
+                            <i class="fa-regular fa-heart"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                My Wishlist
+                            </h3>
+
+                            <p>
+                                Products you saved
+                            </p>
+
+                        </div>
+
+                        <i class="fa-solid fa-angle-right quick-arrow"></i>
+
+                    </a>
+
+
+
+                    <!-- CART -->
+
+                    <a href="{{ url_for('cart.cart') }}"
+                       class="quick-card">
+
+                        <div class="quick-icon">
+
+                            <i class="fa-solid fa-cart-shopping"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                My Cart
+                            </h3>
+
+                            <p>
+                                Products ready to buy
+                            </p>
+
+                        </div>
+
+                        <i class="fa-solid fa-angle-right quick-arrow"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ADDRESSES
+            ================================================= -->
+
+            <div class="content-card"
+                 id="addresses">
+
+
+                <div class="content-header">
+
+                    <div>
+
+                        <h2>
+                            Manage Addresses
+                        </h2>
+
+                        <p>
+                            Add or manage your delivery addresses
+                        </p>
+
+                    </div>
+
+
+                   <a href="{{ url_for('addresses') }}"
+   class="add-address-button">
+
+    <i class="fa-solid fa-plus"></i>
+    ADD NEW ADDRESS
+
+</a>
+
+                </div>
+
+
+                <div id="addressEmpty"
+                     class="address-empty">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <h3>
+                        No saved addresses
+                    </h3>
+
+                    <p>
+                        Add an address to make checkout faster.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SECURITY
+            ================================================= -->
+
+            <div class="content-card security-card">
+
+
+                <div class="security-icon">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Account Security
+                    </h2>
+
+                    <p>
+                        Your account information is protected.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="profile-footer">
+
+    <div>
+
+        <strong>
+            Shop<span>Ease</span>
+        </strong>
+
+        <p>
+            Your trusted online shopping destination.
+        </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="/wishlist">
+            Wishlist
+        </a>
+
+        <a href="{{ url_for('cart.cart') }}">
+            Cart
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</footer>
+
+
+
+<!-- Profile JS -->
+<script src="{{ url_for('static', filename='profile.js') }}"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+
+</html>

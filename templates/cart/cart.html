@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Cart - ShopEase</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='cart.css') }}">
+ <script>
+        const SHOP_EASE_USER_ID =
+            {{ session.get("user_id", "guest")|tojson }};
+    </script>
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="cart-navbar">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="cart-logo"
+    >
+        Shop<span>Ease</span>
+    </a>
+
+
+    <form
+        class="cart-search"
+        action="{{ url_for('products') }}"
+        method="GET"
+    >
+
+        <input
+            type="text"
+            name="search"
+            id="cartSearchInput"
+            placeholder="Search for products, brands and more"
+            autocomplete="off"
+        >
+
+        <button type="submit">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </button>
+
+    </form>
+
+
+    <a
+        href="{{ url_for('home') }}"
+        class="cart-home"
+    >
+        <i class="fa-solid fa-house"></i>
+        Home
+    </a>
+
+</header>
+
+
+<!-- =====================================================
+     CART PAGE
+===================================================== -->
+
+<main class="cart-page">
+
+    <div class="cart-header">
+
+        <h1>
+
+            My Cart
+
+            <span
+                id="cartItemCount"
+                class="cart-count-text"
+            >
+                0 items
+            </span>
+
+        </h1>
+
+    </div>
+
+
+    <!-- JavaScript renders cart here -->
+
+    <div id="cartItems"></div>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='cart.js') }}">
+</script>
+
+</body>
+
+</html>

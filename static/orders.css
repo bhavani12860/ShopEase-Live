@@ -1,0 +1,954 @@
+/* =========================================================
+   SHOP EASE - MY ORDERS PAGE
+   FLIPKART STYLE
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f3f6;
+    color: #212121;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+    width: 100%;
+    min-height: 64px;
+
+    background: #2874f0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 5%;
+
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+    color: white;
+    text-decoration: none;
+
+    font-size: 32px;
+    font-weight: 700;
+    font-style: italic;
+
+    letter-spacing: -1px;
+
+    white-space: nowrap;
+}
+
+.logo span {
+    color: #ffe500;
+}
+
+
+/* =========================================================
+   HOME
+   ========================================================= */
+
+.home {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.home i {
+    font-size: 18px;
+}
+
+.home:hover {
+    color: #ffe500;
+}
+
+.home:hover i {
+    color: #ffe500;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.container {
+    width: 92%;
+    max-width: 1200px;
+
+    margin: 30px auto 50px;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+
+    color: #212121;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   ORDER CARD
+   ========================================================= */
+
+.order-card {
+    width: 100%;
+
+    background: white;
+
+    border-radius: 4px;
+
+    margin-bottom: 20px;
+
+    overflow: hidden;
+
+    border: 1px solid #e0e0e0;
+
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.10);
+
+    transition: 0.2s ease;
+}
+
+.order-card:hover {
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.13);
+}
+
+
+/* =========================================================
+   ORDER TOP
+   ========================================================= */
+
+.order-top {
+    min-height: 78px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 17px 22px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    background: #ffffff;
+}
+
+
+/* ORDER ID */
+
+.order-id {
+    font-size: 17px;
+
+    font-weight: 700;
+
+    color: #212121;
+
+    margin-bottom: 5px;
+}
+
+
+/* DATE */
+
+.order-date {
+    color: #757575;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #388e3c;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.status i {
+    font-size: 15px;
+}
+
+
+/* CANCELLED STATUS */
+
+.status.cancelled {
+    color: #d32f2f;
+
+    background: #fff5f5;
+
+    border: 1px solid #ffcdd2;
+
+    padding: 7px 12px;
+
+    border-radius: 3px;
+}
+
+
+/* RETURN REQUESTED / RETURNED STATUS */
+
+.status.return-status {
+    color: #856404;
+
+    background: #fff8e1;
+
+    border: 1px solid #ffe082;
+
+    padding: 7px 12px;
+
+    border-radius: 3px;
+}
+
+
+/* =========================================================
+   ORDER BODY
+   ========================================================= */
+
+.order-body {
+    width: 100%;
+
+    min-height: 190px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 25px;
+
+    padding: 24px 22px;
+
+    background: white;
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE BOX
+   ========================================================= */
+
+.product-image-box {
+    width: 150px;
+    height: 150px;
+
+    flex-shrink: 0;
+
+    background: white;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 4px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+
+/* PRODUCT IMAGE */
+
+.product-image {
+    width: 140px;
+    height: 140px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* NO IMAGE */
+
+.no-image {
+    font-size: 48px;
+
+    color: #bdbdbd;
+}
+
+
+/* =========================================================
+   PRODUCT INFORMATION
+   ========================================================= */
+
+.product-info {
+    flex: 1;
+
+    min-width: 0;
+
+    padding-top: 2px;
+}
+
+
+/* PRODUCT NAME */
+
+.product-name {
+    font-size: 19px;
+
+    font-weight: 700;
+
+    color: #212121;
+
+    line-height: 1.35;
+
+    margin-bottom: 9px;
+}
+
+
+/* DESCRIPTION */
+
+.description {
+    max-width: 650px;
+
+    color: #757575;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin-bottom: 11px;
+}
+
+
+/* =========================================================
+   RATING
+   ========================================================= */
+
+.rating {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    background: #388e3c;
+
+    color: white;
+
+    padding: 4px 8px;
+
+    border-radius: 3px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+}
+
+.rating i {
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   QUANTITY
+   ========================================================= */
+
+.quantity {
+    color: #555;
+
+    font-size: 14px;
+
+    margin-bottom: 9px;
+}
+
+.quantity strong {
+    color: #212121;
+}
+
+
+/* =========================================================
+   ITEM PRICE
+   ========================================================= */
+
+.item-price {
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #212121;
+}
+
+
+/* =========================================================
+   ORDER TOTAL
+   ========================================================= */
+
+.order-total {
+    width: 190px;
+
+    flex-shrink: 0;
+
+    text-align: right;
+
+    padding-top: 3px;
+}
+
+
+/* TOTAL LABEL */
+
+.total-label {
+    color: #757575;
+
+    font-size: 13px;
+
+    margin-bottom: 7px;
+}
+
+
+/* TOTAL PRICE */
+
+.total-price {
+    color: #212121;
+
+    font-size: 21px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   BUTTON AREA
+   ========================================================= */
+
+.buttons {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    padding: 0 22px 22px;
+}
+
+
+/* =========================================================
+   COMMON BUTTON
+   ========================================================= */
+
+.btn {
+    min-height: 40px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 10px 18px;
+
+    border-radius: 3px;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition: all 0.2s ease;
+
+    cursor: pointer;
+}
+
+.btn i {
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   VIEW DETAILS
+   ========================================================= */
+
+.details {
+    background: #2874f0;
+
+    color: white;
+
+    border: 1px solid #2874f0;
+}
+
+.details:hover {
+    background: #1769df;
+
+    border-color: #1769df;
+}
+
+
+/* =========================================================
+   TRACK ORDER
+   ========================================================= */
+
+.track {
+    background: white;
+
+    color: #2874f0;
+
+    border: 1px solid #2874f0;
+}
+
+.track:hover {
+    background: #f0f6ff;
+}
+
+
+/* =========================================================
+   CANCEL ORDER
+   ========================================================= */
+
+.cancel {
+    background: white;
+
+    color: #ff6161;
+
+    border: 1px solid #ff6161;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cancel:hover {
+    background: #fff5f5;
+
+    border-color: #e53935;
+
+    color: #e53935;
+}
+
+
+/* =========================================================
+   RETURN ORDER
+   ========================================================= */
+
+.return {
+    background: white;
+
+    color: #2874f0;
+
+    border: 1px solid #2874f0;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.return:hover {
+    background: #f0f6ff;
+}
+
+
+/* =========================================================
+   RETURN REQUESTED BUTTON
+   ========================================================= */
+
+.return-status-btn {
+    background: #fff8e1;
+
+    color: #856404;
+
+    border: 1px solid #ffe082;
+
+    cursor: default;
+}
+
+
+/* =========================================================
+   CANCELLED BUTTON
+   ========================================================= */
+
+.cancelled-btn {
+    background: #f5f5f5;
+
+    color: #757575;
+
+    border: 1px solid #ddd;
+
+    cursor: default;
+}
+
+
+/* =========================================================
+   EMPTY ORDERS
+   ========================================================= */
+
+.empty {
+    width: 100%;
+
+    background: white;
+
+    border-radius: 4px;
+
+    border: 1px solid #e0e0e0;
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.10);
+
+    padding: 80px 30px;
+
+    text-align: center;
+}
+
+
+/* EMPTY ICON */
+
+.empty > i {
+    display: block;
+
+    color: #bdbdbd;
+
+    font-size: 60px;
+
+    margin-bottom: 18px;
+}
+
+
+/* EMPTY TITLE */
+
+.empty h2 {
+    color: #212121;
+
+    font-size: 23px;
+
+    margin-bottom: 10px;
+}
+
+
+/* EMPTY TEXT */
+
+.empty p {
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 25px;
+}
+
+
+/* CONTINUE SHOPPING */
+
+.shop-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #2874f0;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 12px 25px;
+
+    border-radius: 3px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+.shop-btn:hover {
+    background: #1769df;
+}
+
+
+/* =========================================================
+   FORM RESET
+   ========================================================= */
+
+.buttons form {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   DISABLED BUTTON
+   ========================================================= */
+
+.btn:disabled {
+    opacity: 0.7;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 10px 4%;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+    .order-body {
+        gap: 20px;
+    }
+
+    .order-total {
+        width: 150px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 768px
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        min-height: 60px;
+
+        padding: 10px 4%;
+    }
+
+    .logo {
+        font-size: 27px;
+    }
+
+    .home {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 94%;
+
+        margin-top: 22px;
+    }
+
+    .title {
+        font-size: 25px;
+
+        margin-bottom: 18px;
+    }
+
+    .order-top {
+        padding: 16px 18px;
+    }
+
+    .order-body {
+        flex-wrap: wrap;
+
+        padding: 20px 18px;
+
+        gap: 18px;
+    }
+
+    .product-info {
+        flex: 1;
+    }
+
+    .order-total {
+        width: 100%;
+
+        text-align: left;
+
+        border-top: 1px solid #eeeeee;
+
+        padding-top: 14px;
+    }
+
+    .buttons {
+        padding: 0 18px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        min-height: 58px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .home {
+        font-size: 13px;
+    }
+
+    .home i {
+        font-size: 15px;
+    }
+
+    .container {
+        width: 94%;
+
+        margin: 18px auto 35px;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .order-top {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 11px;
+    }
+
+    .status {
+        font-size: 13px;
+    }
+
+    .order-body {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 20px;
+    }
+
+    .product-image-box {
+        width: 140px;
+        height: 140px;
+    }
+
+    .product-image {
+        width: 130px;
+        height: 130px;
+    }
+
+    .product-name {
+        font-size: 17px;
+    }
+
+    .description {
+        font-size: 13px;
+    }
+
+    .order-total {
+        width: 100%;
+    }
+
+    .buttons {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        padding: 0 20px 20px;
+
+        gap: 9px;
+    }
+
+    .buttons form {
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .empty {
+        padding: 60px 20px;
+    }
+
+    .empty > i {
+        font-size: 50px;
+    }
+
+    .empty h2 {
+        font-size: 21px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .home {
+        font-size: 12px;
+    }
+
+    .title {
+        font-size: 21px;
+    }
+
+    .order-id {
+        font-size: 15px;
+    }
+
+    .order-date {
+        font-size: 12px;
+    }
+
+}

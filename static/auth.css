@@ -1,0 +1,793 @@
+/* =========================================================
+   SHOP EASE - PROFESSIONAL E-COMMERCE AUTH THEME
+   Flipkart-inspired blue/yellow shopping UI
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f3f6;
+    color: #212121;
+}
+
+
+/* =========================================================
+   MAIN AUTH LAYOUT
+   ========================================================= */
+
+.auth-container {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: stretch;
+
+    background: #f1f3f6;
+}
+
+
+/* =========================================================
+   LEFT BLUE SHOPPING PANEL
+   ========================================================= */
+
+.auth-left {
+    width: 48%;
+
+    background: #2874f0;
+
+    color: white;
+
+    padding: 70px 7%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* decorative circles */
+
+.auth-left::before {
+    content: "";
+
+    position: absolute;
+
+    width: 360px;
+    height: 360px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    top: -120px;
+    left: -100px;
+}
+
+.auth-left::after {
+    content: "";
+
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 229, 0, 0.06);
+
+    right: -220px;
+    bottom: -180px;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    position: relative;
+    z-index: 2;
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    font-style: italic;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 45px;
+}
+
+.brand span {
+    color: #ffe500;
+}
+
+
+/* =========================================================
+   LEFT HEADING
+   ========================================================= */
+
+.auth-left h1 {
+    position: relative;
+    z-index: 2;
+
+    font-size: 42px;
+
+    line-height: 1.15;
+
+    margin-bottom: 18px;
+}
+
+.auth-left > p {
+    position: relative;
+    z-index: 2;
+
+    max-width: 500px;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    color: #eaf2ff;
+
+    margin-bottom: 40px;
+}
+
+
+/* =========================================================
+   BENEFITS
+   ========================================================= */
+
+.benefits {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.benefits > div {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+.benefits > div > span {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+
+    border-radius: 4px;
+
+    font-size: 24px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.benefits p {
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: white;
+}
+
+
+/* =========================================================
+   RIGHT FORM AREA
+   ========================================================= */
+
+.auth-right {
+    width: 52%;
+     background: #2874f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 45px;
+}
+
+
+/* =========================================================
+   AUTH CARD
+   ========================================================= */
+
+.auth-card {
+    width: 100%;
+
+    max-width: 460px;
+
+    background: white;
+
+    padding: 38px 42px;
+
+    border-radius: 3px;
+
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+
+    border: 1px solid #e0e0e0;
+}
+
+
+/* =========================================================
+   FORM HEADING
+   ========================================================= */
+
+.auth-card h2 {
+    font-size: 28px;
+
+    font-weight: 600;
+
+    color: #212121;
+
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #878787;
+
+    font-size: 14px;
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   FLASH / ERROR MESSAGE
+   ========================================================= */
+
+.message {
+    padding: 11px 13px;
+
+    margin-bottom: 18px;
+
+    border-radius: 2px;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+}
+
+.message.error {
+    background: #fff0f0;
+
+    border: 1px solid #ffcccc;
+
+    color: #d32f2f;
+}
+
+.message.success {
+    background: #edf8ee;
+
+    border: 1px solid #b9dfbb;
+
+    color: #2e7d32;
+}
+
+
+/* =========================================================
+   INPUT GROUP
+   ========================================================= */
+
+.input-group {
+    margin-bottom: 19px;
+}
+
+.input-group label {
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #212121;
+
+    margin-bottom: 7px;
+}
+
+.input-group input {
+    width: 100%;
+
+    height: 46px;
+
+    border: 1px solid #cfcfcf;
+
+    border-radius: 2px;
+
+    outline: none;
+
+    padding: 0 13px;
+
+    font-size: 14px;
+
+    color: #212121;
+
+    background: white;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group input::placeholder {
+    color: #999;
+}
+
+.input-group input:focus {
+    border-color: #2874f0;
+
+    box-shadow: 0 0 0 1px #2874f0;
+}
+
+
+/* =========================================================
+   CREATE ACCOUNT / LOGIN BUTTON
+   ========================================================= */
+
+.auth-button {
+    width: 100%;
+
+    height: 48px;
+
+    border: none;
+
+    border-radius: 2px;
+
+    background: #fb641b;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    margin-top: 5px;
+
+    transition: 0.2s;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+.auth-button:hover {
+    background: #e85a17;
+
+    transform: translateY(-1px);
+}
+
+.auth-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   LOGIN / REGISTER SWITCH
+   ========================================================= */
+
+.switch {
+    text-align: center;
+
+    margin-top: 25px;
+
+    font-size: 13px;
+
+    color: #878787;
+}
+
+.switch a {
+    color: #2874f0;
+
+    text-decoration: none;
+
+    font-weight: 700;
+}
+
+.switch a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   BACK HOME
+   ========================================================= */
+
+.back-home {
+    display: block;
+
+    text-align: center;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #eeeeee;
+
+    color: #2874f0;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.back-home:hover {
+    color: #1258c7;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   PASSWORD / FORM VALIDATION
+   ========================================================= */
+
+.input-group input:invalid:not(:placeholder-shown) {
+    border-color: #d32f2f;
+}
+
+.input-group input:valid:not(:placeholder-shown) {
+    border-color: #43a047;
+}
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    padding-right: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    font-size: 17px;
+}
+
+.password-toggle:hover {
+    opacity: 0.7;
+}
+
+.password-toggle:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .auth-left {
+        width: 42%;
+
+        padding: 50px 5%;
+    }
+
+    .auth-right {
+        width: 58%;
+
+        padding: 30px;
+    }
+
+    .auth-left h1 {
+        font-size: 34px;
+    }
+
+    .auth-left > p {
+        font-size: 15px;
+    }
+
+    .brand {
+        font-size: 30px;
+    }
+
+    .auth-card {
+        padding: 32px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .auth-container {
+        min-height: 100vh;
+
+        flex-direction: column;
+    }
+
+    .auth-left {
+        width: 100%;
+
+        padding: 30px 25px;
+
+        min-height: auto;
+    }
+
+    .auth-left::before,
+    .auth-left::after {
+        display: none;
+    }
+
+    .brand {
+        margin-bottom: 20px;
+
+        font-size: 28px;
+    }
+
+    .auth-left h1 {
+        font-size: 28px;
+
+        margin-bottom: 10px;
+    }
+
+    .auth-left > p {
+        font-size: 14px;
+
+        margin-bottom: 22px;
+    }
+
+    .benefits {
+        display: none;
+    }
+
+    .auth-right {
+        width: 100%;
+
+        padding: 25px 15px;
+
+        align-items: flex-start;
+    }
+
+    .auth-card {
+        max-width: 500px;
+
+        padding: 28px 22px;
+    }
+
+    .auth-card h2 {
+        font-size: 24px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .auth-left {
+        padding: 25px 18px;
+    }
+
+    .auth-right {
+        padding: 18px 10px;
+    }
+
+    .auth-card {
+        padding: 24px 18px;
+    }
+
+    .input-group input {
+        height: 44px;
+    }
+
+    .auth-button {
+        height: 46px;
+    }
+}
+/* =====================================================
+   LOGIN INPUT ICONS
+===================================================== */
+
+.input-icon-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon-wrapper input {
+    width: 100%;
+    padding-left: 42px;
+    padding-right: 45px;
+}
+
+.input-icon {
+    position: absolute;
+
+    left: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #2874f0;
+
+    font-size: 15px;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #777;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    z-index: 3;
+}
+
+.password-toggle:hover {
+    color: #2874f0;
+}
+
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+.forgot {
+    width: 100%;
+
+    text-align: right;
+
+    margin: 8px 0 14px;
+}
+
+.forgot a {
+    color: #2874f0;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.forgot a:hover {
+    color: #1665d8;
+
+    text-decoration: underline;
+}
+
+
+/* =====================================================
+   OR DIVIDER
+===================================================== */
+
+.or-divider {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 20px 0;
+}
+
+.or-divider::before,
+.or-divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #e0e0e0;
+}
+
+.or-divider span {
+    color: #878787;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   CONTINUE WITH GOOGLE
+===================================================== */
+
+.google-button {
+    width: 100%;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    background: #ffffff;
+
+    color: #212121;
+
+    border: 1px solid #d9d9d9;
+
+    border-radius: 2px;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.google-button i {
+    font-size: 18px;
+
+    color: #4285f4;
+}
+
+.google-button:hover {
+    background: #f8f8f8;
+
+    border-color: #bdbdbd;
+}

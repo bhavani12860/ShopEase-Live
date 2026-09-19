@@ -1,0 +1,1064 @@
+/* =========================================================
+   SHOPEASE PROFILE PAGE
+   Flipkart-style E-commerce Account UI
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f3f6;
+    color: #212121;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.profile-navbar {
+    height: 64px;
+    background: #2874f0;
+    display: flex;
+    align-items: center;
+    padding: 0 7%;
+    gap: 28px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+
+.shop-logo {
+    text-decoration: none;
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+.shop-logo span {
+    color: #ffe500;
+}
+
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+
+.navbar-search {
+    height: 40px;
+    background: white;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 550px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+
+.navbar-search i {
+    color: #2874f0;
+    margin-left: 15px;
+}
+
+
+.navbar-search input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    font-size: 14px;
+}
+
+
+.navbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+
+.nav-link:hover {
+    color: #ffe500;
+}
+
+
+.cart-link {
+    position: relative;
+}
+
+
+.cart-count {
+    position: absolute;
+    top: -11px;
+    right: -13px;
+    background: #ff6161;
+    color: white;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.profile-page {
+    width: 88%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 18px 0 50px;
+}
+
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    color: #777;
+}
+
+
+.breadcrumb a {
+    color: #2874f0;
+    text-decoration: none;
+}
+
+
+.breadcrumb i {
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   ACCOUNT LAYOUT
+========================================================= */
+
+.account-layout {
+    display: grid;
+    grid-template-columns: 285px 1fr;
+    gap: 18px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.account-sidebar {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+}
+
+
+.user-card {
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #2874f0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.hello-text {
+    font-size: 12px;
+    color: #777;
+}
+
+
+.user-info strong {
+    font-size: 15px;
+    color: #212121;
+}
+
+
+.sidebar-item {
+    min-height: 76px;
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    color: #212121;
+    border-bottom: 1px solid #eee;
+}
+
+
+.sidebar-item:hover {
+    background: #f8faff;
+}
+
+
+.sidebar-icon {
+    width: 34px;
+    text-align: center;
+    color: #2874f0;
+    font-size: 18px;
+}
+
+
+.sidebar-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+.sidebar-text span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.sidebar-text small {
+    color: #999;
+    font-size: 11px;
+}
+
+
+.arrow {
+    color: #aaa;
+    font-size: 12px;
+}
+
+
+.sidebar-section {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+
+.section-heading {
+    padding: 18px 20px 10px;
+    color: #999;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
+.section-heading i {
+    color: #2874f0;
+}
+
+
+.sidebar-link {
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #555;
+    font-size: 13px;
+}
+
+
+.sidebar-link i {
+    width: 17px;
+    text-align: center;
+}
+
+
+.sidebar-link:hover {
+    background: #f5f8ff;
+    color: #2874f0;
+}
+
+
+.sidebar-link.active {
+    color: #2874f0;
+    background: #f5f8ff;
+    font-weight: 600;
+}
+
+
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 53px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #555;
+    font-size: 13px;
+    border-top: 1px solid #eee;
+}
+
+
+.logout-link:hover {
+    color: #e53935;
+    background: #fff8f8;
+}
+
+
+/* =========================================================
+   RIGHT CONTENT
+========================================================= */
+
+.account-content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+
+.content-card {
+    background: white;
+    border: 1px solid #e5e5e5;
+    padding: 26px 30px;
+}
+
+
+.content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #eee;
+}
+
+
+.content-header h2 {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+
+.content-header p {
+    font-size: 12px;
+    color: #888;
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
+
+.edit-button {
+    border: none;
+    background: transparent;
+    color: #2874f0;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+
+
+.edit-button:hover {
+    background: #f5f8ff;
+}
+/* =========================================================
+   ADD NEW ADDRESS - PERFECT CENTER
+========================================================= */
+
+#addresses .content-header {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding-bottom: 22px;
+
+    gap: 0;
+
+    position: static;
+}
+
+
+/* TITLE + SUBTITLE */
+
+#addresses .content-header > div {
+    width: 100%;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+/* MANAGE ADDRESSES TITLE */
+
+#addresses .content-header h2 {
+    margin: 0 0 6px;
+
+    text-align: center;
+}
+
+
+/* SUBTITLE */
+
+#addresses .content-header p {
+    margin: 0 0 16px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   ADD NEW ADDRESS BUTTON
+========================================================= */
+
+#addresses .add-address-button {
+    position: static !important;
+
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+
+    float: none !important;
+
+    transform: none !important;
+
+    width: 165px;
+    min-width: 165px;
+
+    height: 42px;
+
+    margin: 0 auto !important;
+    padding: 0 !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    text-align: center !important;
+
+    border: none;
+
+    border-radius: 2px;
+
+    background: #2874f0;
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    line-height: normal !important;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+/* BUTTON TEXT */
+
+#addresses .add-address-button span {
+    display: inline-block;
+
+    margin: 0;
+    padding: 0;
+
+    text-align: center;
+
+    line-height: normal;
+}
+
+
+/* PLUS ICON */
+
+#addresses .add-address-button i {
+    margin: 0 7px 0 0 !important;
+    padding: 0 !important;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+}
+
+
+/* HOVER */
+
+#addresses .add-address-button:hover {
+    background: #1f63d1;
+}
+
+
+/* =========================================================
+   PROFILE DETAILS
+========================================================= */
+
+.profile-details {
+    padding-top: 23px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px 45px;
+}
+
+
+.detail-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+
+.detail-group label {
+    color: #777;
+    font-size: 12px;
+}
+
+
+.detail-value {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    background: #fafafa;
+    border: 1px solid #eee;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   EDIT FORM
+========================================================= */
+
+.profile-edit-form {
+    padding-top: 23px;
+}
+
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.form-group label {
+    color: #777;
+    font-size: 12px;
+}
+
+
+.form-group input {
+    height: 42px;
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0 12px;
+    font-size: 14px;
+}
+
+
+.form-group input:focus {
+    border-color: #2874f0;
+}
+
+
+.edit-actions {
+    margin-top: 22px;
+    display: flex;
+    gap: 12px;
+}
+
+
+.save-button,
+.cancel-button {
+    height: 40px;
+    padding: 0 24px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.save-button {
+    background: #2874f0;
+    color: white;
+}
+
+
+.cancel-button {
+    background: #eee;
+    color: #333;
+}
+
+
+/* =========================================================
+   PHONE
+========================================================= */
+
+.phone-box {
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px;
+    background: #fafafa;
+    border: 1px solid #eee;
+}
+
+
+.phone-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eaf2ff;
+    color: #2874f0;
+    border-radius: 50%;
+}
+
+
+.phone-box > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.phone-label {
+    font-size: 11px;
+    color: #888;
+}
+
+
+.phone-box strong {
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   QUICK SHOPPING
+========================================================= */
+
+.quick-section {
+    background: white;
+    padding: 26px 30px;
+    border: 1px solid #e5e5e5;
+}
+
+
+.quick-section > h2 {
+    font-size: 19px;
+    margin-bottom: 20px;
+}
+
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+
+.quick-card {
+    min-height: 105px;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 18px;
+    text-decoration: none;
+    color: #212121;
+    transition: 0.2s;
+}
+
+
+.quick-card:hover {
+    border-color: #2874f0;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.08);
+}
+
+
+.quick-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: #f1f6ff;
+    color: #2874f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+
+.quick-card h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+
+.quick-card p {
+    color: #888;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+
+.quick-arrow {
+    margin-left: auto;
+    color: #aaa;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ADDRESS
+========================================================= */
+
+.add-address-button {
+    border: none;
+    background: #2874f0;
+    color: white;
+    height: 38px;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.add-address-button:hover {
+    background: #1f63d1;
+}
+
+
+.address-empty {
+    text-align: center;
+    padding: 38px 10px 15px;
+}
+
+
+.address-empty i {
+    color: #2874f0;
+    font-size: 32px;
+    margin-bottom: 13px;
+}
+
+
+.address-empty h3 {
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+
+.address-empty p {
+    color: #888;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.security-card {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+
+.security-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #eef8f0;
+    color: #2e7d32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+
+.security-card h2 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+
+.security-card p {
+    color: #888;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.profile-footer {
+    background: #172337;
+    color: #ddd;
+    min-height: 100px;
+    padding: 25px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+
+.profile-footer strong {
+    font-size: 18px;
+    color: white;
+}
+
+
+.profile-footer strong span {
+    color: #ffe500;
+}
+
+
+.profile-footer p {
+    color: #999;
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+
+.footer-links {
+    display: flex;
+    gap: 22px;
+}
+
+
+.footer-links a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+
+.footer-links a:hover {
+    color: #ffe500;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .profile-navbar {
+        padding: 0 3%;
+    }
+
+    .profile-page {
+        width: 94%;
+    }
+
+    .account-layout {
+        grid-template-columns: 240px 1fr;
+    }
+
+    .navbar-right {
+        gap: 12px;
+    }
+
+    .nav-link {
+        font-size: 12px;
+    }
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 750px) {
+
+    .profile-navbar {
+        height: auto;
+        min-height: 64px;
+        flex-wrap: wrap;
+        padding: 12px 18px;
+    }
+
+    .navbar-search {
+        order: 3;
+        flex-basis: 100%;
+        max-width: none;
+    }
+
+    .navbar-right {
+        margin-left: auto;
+    }
+
+    .account-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .account-sidebar {
+        width: 100%;
+    }
+
+    .profile-details {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .profile-page {
+        width: 96%;
+    }
+
+    .content-card,
+    .quick-section {
+        padding: 20px 17px;
+    }
+
+    .content-header {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .navbar-right {
+        gap: 10px;
+    }
+
+    .nav-link {
+        font-size: 0;
+    }
+
+    .nav-link i {
+        font-size: 17px;
+    }
+
+    .quick-card {
+        padding: 14px;
+    }
+
+}
+
+/* =========================================================
+   PROFILE NAVBAR CART / WISHLIST COUNT
+========================================================= */
+
+.nav-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.nav-count {
+    position: absolute;
+
+    top: -10px;
+    right: -12px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ff3f6c;
+    color: #ffffff;
+
+    border-radius: 50%;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 18px;
+    text-align: center;
+}

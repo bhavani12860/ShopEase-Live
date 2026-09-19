@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout - ShopEase</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='checkout.css') }}">
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="checkout-navbar">
+
+    <a href="{{ url_for('home') }}"
+       class="checkout-logo">
+
+        Shop<span>Ease</span>
+
+    </a>
+
+    <div class="secure-checkout">
+
+        <i class="fa-solid fa-lock"></i>
+
+        Secure Checkout
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN CHECKOUT
+===================================================== -->
+
+<main class="checkout-page">
+
+
+    <!-- =================================================
+         LEFT SIDE
+    ================================================== -->
+
+    <section class="checkout-left">
+
+
+        <!-- =============================================
+             STEP 1
+        ============================================== -->
+
+        <div class="checkout-card">
+
+            <div class="step-header">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <div>
+
+                    <h2>
+                        Delivery Address
+                    </h2>
+
+                    <p>
+                        Choose a saved address or add a new one
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 SAVED ADDRESSES
+            ========================================== -->
+
+            {% if addresses %}
+
+            <div class="saved-address-section">
+
+                <h3>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Saved Addresses
+                </h3>
+
+
+                {% for addr in addresses %}
+
+                <div class="saved-address-card">
+
+                    <div class="saved-address-top">
+
+                        <div>
+
+                            <strong>
+                                {{ addr.full_name }}
+                            </strong>
+
+                            <span class="address-type">
+                                HOME
+                            </span>
+
+                        </div>
+
+                        <strong>
+                            {{ addr.phone }}
+                        </strong>
+
+                    </div>
+
+
+                    <p>
+                        {{ addr.address }}
+                    </p>
+
+                    <p>
+                        {{ addr.city }},
+                        {{ addr.state }}
+                        - {{ addr.pincode }}
+                    </p>
+
+
+                    {% if addr.landmark %}
+
+                    <p>
+                        <strong>Landmark:</strong>
+                        {{ addr.landmark }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <a
+                        href="{{ url_for(
+                            'checkout.payment',
+                            address_id=addr.id
+                        ) }}"
+                        class="deliver-btn"
+                    >
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Deliver to this address
+
+                    </a>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- =========================================
+                 ADD NEW ADDRESS
+            ========================================== -->
+
+            <div class="new-address-section">
+
+                <h3>
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    {% if addresses %}
+                        Add New Address
+                    {% else %}
+                        Enter Delivery Address
+                    {% endif %}
+
+                </h3>
+
+
+                <form
+                    id="checkoutForm"
+                    method="POST"
+                    action="{{ url_for('checkout.save_address') }}"
+                >
+
+
+                    <!-- NAME + PHONE -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="full_name"
+                                id="full_name"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Mobile Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                name="phone"
+                                id="phone"
+                                placeholder="Enter 10-digit mobile number"
+                                maxlength="10"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Address
+                        </label>
+
+                        <textarea
+                            name="address"
+                            id="address"
+                            placeholder="House No, Street, Area"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- CITY + STATE -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                name="city"
+                                id="city"
+                                placeholder="Enter city"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                State
+                            </label>
+
+                            <input
+                                type="text"
+                                name="state"
+                                id="state"
+                                placeholder="Enter state"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PINCODE + LANDMARK -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Pincode
+                            </label>
+
+                            <input
+                                type="text"
+                                name="pincode"
+                                id="pincode"
+                                placeholder="6-digit pincode"
+                                maxlength="6"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Landmark
+                            </label>
+
+                            <input
+                                type="text"
+                                name="landmark"
+                                id="landmark"
+                                placeholder="Optional"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SAVE -->
+
+                    <button
+                        type="submit"
+                        class="save-address-btn"
+                    >
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        Save Address & Continue
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             STEP 2 LOCKED
+        ================================================== -->
+
+        <div class="checkout-card payment-locked">
+
+            <div class="step-header">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <div>
+
+                    <h2>
+                        Payment Method
+                    </h2>
+
+                    <p>
+                        Complete your delivery address first
+                    </p>
+
+                </div>
+
+                <i class="fa-solid fa-lock lock-icon"></i>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =================================================
+         RIGHT SIDE - ORDER SUMMARY
+    ================================================== -->
+
+    <aside class="order-summary">
+
+        <h2>
+            Order Summary
+        </h2>
+
+
+        {% if cart_items %}
+
+        <div class="summary-products">
+
+            {% for item in cart_items %}
+
+            <div class="summary-product">
+
+                <div class="summary-image">
+
+                    {% if item.image %}
+
+                    <img
+                        src="{{ item.image }}"
+                        alt="{{ item.name }}"
+                    >
+
+                    {% else %}
+
+                    <i class="fa-solid fa-box"></i>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="summary-product-info">
+
+                    <strong>
+                        {{ item.name }}
+                    </strong>
+
+                    <span>
+                        Qty: {{ item.quantity }}
+                    </span>
+
+                    <b>
+                        ₹{{ "%.2f"|format(item.item_total) }}
+                    </b>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="summary-line">
+
+            <span>
+                Subtotal
+            </span>
+
+            <strong>
+                ₹{{ "%.2f"|format(subtotal) }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-line">
+
+            <span>
+                Delivery
+            </span>
+
+            <strong class="free">
+                FREE
+            </strong>
+
+        </div>
+
+
+        <div class="summary-line">
+
+            <span>
+                Discount
+            </span>
+
+            <strong class="discount">
+                - ₹{{ "%.2f"|format(discount) }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-total">
+
+            <span>
+                Total Amount
+            </span>
+
+            <strong>
+                ₹{{ "%.2f"|format(total_amount) }}
+            </strong>
+
+        </div>
+
+
+        <div class="secure-message">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            Safe and secure shopping with ShopEase
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-checkout">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            <h3>
+                Your cart is empty.
+            </h3>
+
+            <a href="{{ url_for('products') }}">
+                Continue Shopping
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </aside>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='checkout.js') }}">
+</script>
+
+</body>
+
+</html>

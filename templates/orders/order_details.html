@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Order Details - ShopEase
+    </title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f3f6;
+            color: #212121;
+        }
+
+
+        /* =================================================
+           NAVBAR
+        ================================================= */
+
+        .navbar {
+            height: 70px;
+            background: #2874f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+        }
+
+        .logo {
+            color: white;
+            font-size: 30px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #ffe500;
+        }
+
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .home-link i {
+            margin-right: 7px;
+        }
+
+
+        /* =================================================
+           MAIN
+        ================================================= */
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 30px auto 60px;
+        }
+
+
+        /* =================================================
+           ORDER HEADER
+        ================================================= */
+
+        .order-header {
+            background: white;
+            border-radius: 6px;
+            padding: 25px 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .order-title {
+            margin: 0;
+            font-size: 27px;
+        }
+
+        .order-date {
+            margin-top: 10px;
+            color: #757575;
+            font-size: 15px;
+        }
+
+        .status {
+            color: #388e3c;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .status i {
+            margin-right: 6px;
+        }
+
+
+        /* =================================================
+           SECTION
+        ================================================= */
+
+        .section {
+            background: white;
+            margin-top: 22px;
+            border-radius: 6px;
+            padding: 25px 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        .section-title {
+            font-size: 23px;
+            font-weight: 700;
+            margin: 0 0 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .section-title i {
+            margin-right: 9px;
+        }
+
+
+        /* =================================================
+           PRODUCT
+        ================================================= */
+
+        .product-item {
+            display: flex;
+            gap: 28px;
+
+            padding: 20px 0;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+
+        .product-image-box {
+            width: 170px;
+            height: 170px;
+
+            border: 1px solid #eeeeee;
+            border-radius: 5px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+
+            flex-shrink: 0;
+        }
+
+        .product-image {
+            width: 150px;
+            height: 150px;
+
+            object-fit: contain;
+        }
+
+
+        .product-info {
+            flex: 1;
+            padding-top: 5px;
+        }
+
+        .product-name {
+            font-size: 21px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-bottom: 12px;
+        }
+
+
+        .rating {
+            display: inline-block;
+            background: #388e3c;
+            color: white;
+
+            padding: 5px 9px;
+            border-radius: 3px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            margin-bottom: 12px;
+        }
+
+        .rating i {
+            margin-left: 3px;
+        }
+
+
+        .quantity {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+
+        /* =================================================
+           DELIVERY ADDRESS
+        ================================================= */
+
+        .address-box {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .address-name {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .address-phone {
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        .landmark {
+            margin-top: 5px;
+        }
+
+
+        /* =================================================
+           PAYMENT
+        ================================================= */
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 10px 0;
+
+            font-size: 16px;
+        }
+
+        .payment-method {
+            font-weight: 700;
+        }
+
+
+        /* =================================================
+           TOTAL
+        ================================================= */
+
+        .total-section {
+            background: #fff;
+            margin-top: 22px;
+
+            padding: 25px 30px;
+
+            border-radius: 6px;
+
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 18px;
+            padding: 8px 0;
+        }
+
+        .total-row.final {
+            border-top: 1px solid #ddd;
+            margin-top: 10px;
+            padding-top: 18px;
+
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+
+        /* =================================================
+           BUTTONS
+        ================================================= */
+
+        .buttons {
+            margin-top: 25px;
+
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 25px;
+
+            border-radius: 4px;
+
+            text-decoration: none;
+
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .primary {
+            background: #2874f0;
+            color: white;
+        }
+
+        .secondary {
+            background: white;
+            color: #2874f0;
+            border: 1px solid #2874f0;
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .container {
+                width: 96%;
+            }
+
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .product-item {
+                flex-direction: column;
+            }
+
+            .product-image-box {
+                width: 100%;
+                height: 220px;
+            }
+
+            .product-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <a href="{{ url_for('home') }}"
+       class="logo">
+
+        Shop<span>Ease</span>
+
+    </a>
+
+
+    <a href="{{ url_for('home') }}"
+       class="home-link">
+
+        <i class="fa-solid fa-house"></i>
+
+        Home
+
+    </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="container">
+
+
+    <!-- =================================================
+         ORDER HEADER
+    ================================================= -->
+
+    <div class="order-header">
+
+        <div>
+
+            <h1 class="order-title">
+
+                Order #SE{{ order.id }}
+
+            </h1>
+
+
+            <div class="order-date">
+
+                Placed on
+                {{ order.created_at }}
+
+            </div>
+
+        </div>
+
+
+        <div class="status">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            {{ order.status }}
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         ORDER ITEMS
+    ================================================= -->
+
+    <div class="section">
+
+        <h2 class="section-title">
+
+            <i class="fa-solid fa-box"></i>
+
+            Order Items
+
+        </h2>
+
+
+        {% if order_items %}
+
+            {% for item in order_items %}
+
+                <div class="product-item">
+
+
+                    <!-- PRODUCT IMAGE -->
+
+                    <div class="product-image-box">
+
+                        <img
+                            src="{{ item.image_url }}"
+                            alt="{{ item.name }}"
+                            class="product-image"
+
+                            onerror="this.onerror=null; this.src='/static/images/no-product.png';"
+                        >
+
+                    </div>
+
+
+
+                    <!-- PRODUCT DETAILS -->
+
+                    <div class="product-info">
+
+
+                        <div class="product-name">
+
+                            {{ item.name }}
+
+                        </div>
+
+
+                        {% if item.description %}
+
+                            <div class="product-description">
+
+                                {{ item.description }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if item.rating %}
+
+                            <div class="rating">
+
+                                {{ item.rating }}
+
+                                <i class="fa-solid fa-star"></i>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="quantity">
+
+                            Quantity:
+                            <strong>
+                                {{ item.quantity }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="price">
+
+                            ₹{{ "%.2f"|format(item.price|float) }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                No products found for this order.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- =================================================
+         DELIVERY ADDRESS
+    ================================================= -->
+
+    <div class="section">
+
+        <h2 class="section-title">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            Delivery Address
+
+        </h2>
+
+
+        <div class="address-box">
+
+
+            <div class="address-name">
+
+                {{ order.full_name }}
+
+            </div>
+
+
+            <div class="address-phone">
+
+                {{ order.phone }}
+
+            </div>
+
+
+            <div>
+
+                {{ order.address }}
+
+            </div>
+
+
+            <div>
+
+                {{ order.city }},
+                {{ order.state }}
+                -
+                {{ order.pincode }}
+
+            </div>
+
+
+            {% if order.landmark %}
+
+                <div class="landmark">
+
+                    <strong>Landmark:</strong>
+
+                    {{ order.landmark }}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PAYMENT DETAILS
+    ================================================= -->
+
+    <div class="section">
+
+        <h2 class="section-title">
+
+            <i class="fa-solid fa-credit-card"></i>
+
+            Payment Details
+
+        </h2>
+
+
+        <div class="payment-row">
+
+            <span>
+                Payment Method
+            </span>
+
+            <span class="payment-method">
+
+                {{ order.payment_method }}
+
+            </span>
+
+        </div>
+
+
+        <div class="payment-row">
+
+            <span>
+                Order Status
+            </span>
+
+            <span class="payment-method">
+
+                {{ order.status }}
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         TOTAL
+    ================================================= -->
+
+    <div class="total-section">
+
+
+        <div class="total-row final">
+
+            <span>
+                Total Amount
+            </span>
+
+            <span>
+                ₹{{ "%.2f"|format(order.total_amount|float) }}
+            </span>
+
+        </div>
+
+
+        <div class="buttons">
+
+
+            <a
+                href="{{ url_for('orders.track_order', order_id=order.id) }}"
+                class="btn primary">
+
+                <i class="fa-solid fa-location-crosshairs"></i>
+
+                Track Order
+
+            </a>
+
+
+            <a
+                href="{{ url_for('orders.orders') }}"
+                class="btn secondary">
+
+                <i class="fa-solid fa-list"></i>
+
+                My Orders
+
+            </a>
+
+
+            <a
+                href="{{ url_for('home') }}"
+                class="btn secondary">
+
+                <i class="fa-solid fa-house"></i>
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

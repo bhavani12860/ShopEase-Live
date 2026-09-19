@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if category and category|lower != "all" %}
+            {{ category }} Products - ShopEase
+        {% else %}
+            All Products - ShopEase
+        {% endif %}
+    </title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- =========================================================
+     TOP NAVBAR
+========================================================= -->
+
+<header class="shop-navbar">
+
+    <!-- LOGO -->
+    <a href="{{ url_for('home') }}" class="shop-logo">
+        Shop<span>Ease</span>
+    </a>
+
+
+    <!-- SEARCH -->
+    <form class="shop-search"
+          action="{{ url_for('products') }}"
+          method="GET">
+
+        <input
+            type="text"
+            name="search"
+            id="searchInput"
+            placeholder="Search for products, brands and more"
+            autocomplete="off"
+        >
+
+        <button type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+    </form>
+
+
+    <!-- ACCOUNT -->
+    <div class="shop-account">
+
+        <i class="fa-regular fa-user"></i>
+
+        <div class="account-text">
+
+            {% if session.get("user_id") %}
+
+                <small>Hello,</small>
+
+                <strong>
+                    {{ session.get("user_name") }}
+                </strong>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}">
+                    <small>Hello, Sign in</small>
+                    <strong>Account</strong>
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- WISHLIST -->
+    <button class="shop-nav-button"
+            type="button"
+            onclick="showWishlistMessage()">
+
+        <i class="fa-regular fa-heart"></i>
+
+        <span>Wishlist</span>
+
+    </button>
+
+
+    <!-- CART -->
+    <button class="shop-nav-button cart-button"
+            type="button"
+            onclick="showCartMessage()">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span>Cart</span>
+
+        <b id="cartCount">0</b>
+
+    </button>
+
+</header>
+
+
+<!-- =========================================================
+     CATEGORY NAVIGATION
+========================================================= -->
+
+<nav class="shop-category-bar">
+
+    <a href="{{ url_for('home') }}">
+        <i class="fa-solid fa-house"></i>
+        Home
+    </a>
+
+    <a href="{{ url_for('products', category='Mobiles') }}">
+        Mobiles
+    </a>
+
+    <a href="{{ url_for('products', category='Electronics') }}">
+        Electronics
+    </a>
+
+    <a href="{{ url_for('products', category='Fashion') }}">
+        Fashion
+    </a>
+
+    <a href="{{ url_for('products', category='Footwear') }}">
+        Footwear
+    </a>
+
+    <a href="{{ url_for('products', category='Home') }}">
+        Home
+    </a>
+
+    <a href="{{ url_for('products', category='Beauty') }}">
+        Beauty
+    </a>
+
+    <a href="{{ url_for('products', category='Books') }}">
+        Books
+    </a>
+
+    <a href="{{ url_for('products', category='Grocery') }}">
+        Grocery
+    </a>
+
+</nav>
+
+
+<!-- =========================================================
+     MAIN PAGE
+========================================================= -->
+
+<main class="products-page">
+
+
+    <!-- BREADCRUMB -->
+
+    <div class="products-breadcrumb">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <i class="fa-solid fa-angle-right"></i>
+
+        <strong>
+
+            {% if category and category|lower != "all" %}
+                {{ category }}
+            {% else %}
+                All Products
+            {% endif %}
+
+        </strong>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <section class="products-header">
+
+        <div>
+
+            <h1>
+
+                {% if category and category|lower != "all" %}
+                    {{ category }}
+                {% else %}
+                    All Products
+                {% endif %}
+
+            </h1>
+
+            <p>
+                Showing {{ products|length }} products
+            </p>
+
+        </div>
+
+
+        <!-- SORT -->
+        <div class="sort-box">
+
+            <label for="sortProducts">
+                Sort By
+            </label>
+
+            <select id="sortProducts"
+                    onchange="sortProducts()">
+
+                <option value="default">
+                    Recommended
+                </option>
+
+                <option value="low">
+                    Price: Low to High
+                </option>
+
+                <option value="high">
+                    Price: High to Low
+                </option>
+
+                <option value="rating">
+                    Customer Rating
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCT AREA
+    ====================================================== -->
+
+    {% if products %}
+
+        <section class="products-layout">
+
+
+            <!-- FILTER SIDEBAR -->
+
+            <aside class="product-filter">
+
+                <h3>
+                    Filters
+                </h3>
+
+
+                <div class="filter-section">
+
+                    <h4>
+                        Categories
+                    </h4>
+
+                    <a href="{{ url_for('products', category='Mobiles') }}">
+                        Mobiles
+                    </a>
+
+                    <a href="{{ url_for('products', category='Electronics') }}">
+                        Electronics
+                    </a>
+
+                    <a href="{{ url_for('products', category='Fashion') }}">
+                        Fashion
+                    </a>
+
+                    <a href="{{ url_for('products', category='Footwear') }}">
+                        Footwear
+                    </a>
+
+                    <a href="{{ url_for('products', category='Beauty') }}">
+                        Beauty
+                    </a>
+
+                    <a href="{{ url_for('products', category='Books') }}">
+                        Books
+                    </a>
+
+                    <a href="{{ url_for('products', category='Grocery') }}">
+                        Grocery
+                    </a>
+
+                </div>
+
+
+                <div class="filter-section">
+
+                    <h4>
+                        Price
+                    </h4>
+
+                    <label>
+                        <input type="checkbox">
+                        Under ₹1,000
+                    </label>
+
+                    <label>
+                        <input type="checkbox">
+                        ₹1,000 - ₹5,000
+                    </label>
+
+                    <label>
+                        <input type="checkbox">
+                        ₹5,000 - ₹20,000
+                    </label>
+
+                    <label>
+                        <input type="checkbox">
+                        Above ₹20,000
+                    </label>
+
+                </div>
+
+
+                <div class="filter-section">
+
+                    <h4>
+                        Customer Rating
+                    </h4>
+
+                    <label>
+                        <input type="checkbox">
+                        ⭐ 4★ & above
+                    </label>
+
+                    <label>
+                        <input type="checkbox">
+                        ⭐ 3★ & above
+                    </label>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =================================================
+                 PRODUCTS GRID
+            ================================================== -->
+
+            <div class="products-container">
+
+                <div class="products-grid"
+                     id="productsGrid">
+
+                    {% for product in products %}
+
+                        <article class="product-card"
+                                 data-price="{{ product.price|float }}"
+                                 data-rating="{{ product.rating|float }}">
+
+
+                            <!-- WISHLIST -->
+
+                            <button class="product-wishlist"
+                                    type="button"
+                                    onclick="addToWishlist(this)"
+                                    aria-label="Add to wishlist">
+
+                                <i class="fa-regular fa-heart"></i>
+
+                            </button>
+
+
+                            <!-- DISCOUNT -->
+
+                            {% if product.discount %}
+
+                                <span class="product-discount">
+                                    {{ product.discount }}
+                                </span>
+
+                            {% endif %}
+
+
+                            <!-- PRODUCT IMAGE -->
+
+                            <div class="product-image">
+
+                                {% if product.image %}
+
+                                    <img
+                                        src="{{ product.image }}"
+                                        alt="{{ product.name }}"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <div class="product-icon">
+
+                                        <i class="fa-solid {{ product.icon or 'fa-box' }}"></i>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- PRODUCT INFORMATION -->
+
+                            <div class="product-info">
+
+                                <div class="product-category">
+
+                                    {{ product.category or category }}
+
+                                </div>
+
+
+                                <h2 class="product-name">
+
+                                    {{ product.name }}
+
+                                </h2>
+
+
+                                <!-- RATING -->
+
+                                <div class="product-rating">
+
+                                    <span class="rating-badge">
+
+                                        {{ product.rating or 0 }}
+
+                                        <i class="fa-solid fa-star"></i>
+
+                                    </span>
+
+                                    <span class="rating-text">
+                                        Customer Rating
+                                    </span>
+
+                                </div>
+
+
+                                <!-- PRICE -->
+
+                                <div class="product-price">
+
+                                    <strong>
+                                        ₹{{ "{:,.0f}".format(product.price|float) }}
+                                    </strong>
+
+
+                                    {% if product.old_price %}
+
+                                        <span class="product-old-price">
+
+                                            ₹{{ "{:,.0f}".format(product.old_price|float) }}
+
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if product.old_price and product.price %}
+
+                                        {% set saving =
+                                            ((product.old_price|float - product.price|float)
+                                            / product.old_price|float * 100)
+                                        %}
+
+                                        <span class="product-saving">
+
+                                            {{ saving|round|int }}% off
+
+                                        </span>
+
+                                    {% elif product.discount %}
+
+                                        <span class="product-saving">
+                                            {{ product.discount }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <!-- STOCK -->
+
+                                {% if product.stock is defined %}
+
+                                    {% if product.stock > 0 %}
+
+                                        <div class="stock-available">
+
+                                            <i class="fa-solid fa-circle-check"></i>
+
+                                            In Stock
+
+                                        </div>
+
+                                    {% else %}
+
+                                        <div class="stock-out">
+
+                                            Out of Stock
+
+                                        </div>
+
+                                    {% endif %}
+
+                                {% endif %}
+
+
+                                <!-- ACTIONS -->
+
+                                <div class="product-actions">
+
+                                    <button
+                                        type="button"
+                                        class="add-cart-btn"
+                                        onclick="addToCart('{{ product.name|e }}')">
+
+                                        <i class="fa-solid fa-cart-shopping"></i>
+
+                                        Add to Cart
+
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="buy-now-btn"
+                                        onclick="buyNow('{{ product.name|e }}')">
+
+                                        Buy Now
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- LOAD MORE -->
+
+                <div class="load-more-container">
+
+                    <button
+                        type="button"
+                        class="load-more-btn"
+                        onclick="loadMoreProducts()">
+
+                        <i class="fa-solid fa-rotate"></i>
+
+                        Load More Products
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    {% else %}
+
+
+        <!-- =================================================
+             NO PRODUCTS
+        ================================================== -->
+
+        <section class="no-products">
+
+            <div class="no-products-icon">
+
+                <i class="fa-solid fa-box-open"></i>
+
+            </div>
+
+            <h2>
+                No products found
+            </h2>
+
+            <p>
+                We couldn't find any products in this category.
+            </p>
+
+            <a href="{{ url_for('products', category='all') }}">
+                View All Products
+            </a>
+
+        </section>
+
+    {% endif %}
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+let cartCount = 0;
+
+
+/* =========================================================
+   ADD TO CART
+========================================================= */
+
+function addToCart(productName) {
+
+    cartCount++;
+
+    const cartElement =
+        document.getElementById("cartCount");
+
+    if (cartElement) {
+        cartElement.textContent = cartCount;
+    }
+
+    alert(productName + " added to cart!");
+
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+function addToWishlist(button) {
+
+    const icon =
+        button.querySelector("i");
+
+    if (!icon) {
+        return;
+    }
+
+
+    if (icon.classList.contains("fa-regular")) {
+
+        icon.classList.remove("fa-regular");
+
+        icon.classList.add("fa-solid");
+
+        button.classList.add("active");
+
+        alert("Product added to Wishlist!");
+
+    } else {
+
+        icon.classList.remove("fa-solid");
+
+        icon.classList.add("fa-regular");
+
+        button.classList.remove("active");
+
+    }
+
+}
+
+
+/* =========================================================
+   BUY NOW
+========================================================= */
+
+function buyNow(productName) {
+
+    alert(
+        productName +
+        " selected for purchase!"
+    );
+
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+function showCartMessage() {
+
+    if (cartCount === 0) {
+
+        alert("Your cart is empty.");
+
+    } else {
+
+        alert(
+            "You have " +
+            cartCount +
+            " item(s) in your cart."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   WISHLIST MESSAGE
+========================================================= */
+
+function showWishlistMessage() {
+
+    alert("Wishlist opened.");
+
+}
+
+
+/* =========================================================
+   SORT PRODUCTS
+========================================================= */
+
+function sortProducts() {
+
+    const sortValue =
+        document.getElementById("sortProducts").value;
+
+    const grid =
+        document.getElementById("productsGrid");
+
+    if (!grid) {
+        return;
+    }
+
+
+    const cards =
+        Array.from(
+            grid.querySelectorAll(".product-card")
+        );
+
+
+    if (sortValue === "low") {
+
+        cards.sort(function(a, b) {
+
+            return (
+                parseFloat(a.dataset.price) -
+                parseFloat(b.dataset.price)
+            );
+
+        });
+
+    }
+
+
+    else if (sortValue === "high") {
+
+        cards.sort(function(a, b) {
+
+            return (
+                parseFloat(b.dataset.price) -
+                parseFloat(a.dataset.price)
+            );
+
+        });
+
+    }
+
+
+    else if (sortValue === "rating") {
+
+        cards.sort(function(a, b) {
+
+            return (
+                parseFloat(b.dataset.rating) -
+                parseFloat(a.dataset.rating)
+            );
+
+        });
+
+    }
+
+
+    cards.forEach(function(card) {
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   LOAD MORE
+========================================================= */
+
+function loadMoreProducts() {
+
+    /*
+       Real database pagination will be connected here.
+
+       Currently the server sends the products available
+       from the Flask route.
+    */
+
+    alert(
+        "More products will load automatically when database pagination is enabled."
+    );
+
+}
+
+</script>
+
+</body>
+</html>

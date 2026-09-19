@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        My Wishlist - ShopEase
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+    <script>
+    const SHOP_EASE_USER_ID =
+        {{ session.get("user_id", "guest")|tojson }};
+</script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: #f1f3f6;
+
+            font-family: Arial, sans-serif;
+
+            color: #212121;
+
+        }
+
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .wishlist-navbar {
+
+            height: 70px;
+
+            background: #2874f0;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 35px;
+
+            gap: 30px;
+
+        }
+
+
+        .wishlist-logo {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+        }
+
+
+        .wishlist-logo span {
+
+            color: #ffe500;
+
+        }
+
+
+        .wishlist-search {
+
+            flex: 1;
+
+            max-width: 750px;
+
+            height: 45px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+        }
+
+
+        .wishlist-search input {
+
+            flex: 1;
+
+            height: 45px;
+
+            border: none;
+
+            outline: none;
+
+            padding: 0 16px;
+
+            font-size: 15px;
+
+        }
+
+
+        .wishlist-search button {
+
+            width: 58px;
+
+            height: 45px;
+
+            border: none;
+
+            background: #ffe500;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+        }
+
+
+        .wishlist-nav-link {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+        }
+
+
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .wishlist-page {
+
+            max-width: 1250px;
+
+            margin: 25px auto;
+
+            padding: 0 15px;
+
+        }
+
+
+        .wishlist-header {
+
+            background: white;
+
+            padding: 22px 28px;
+
+            border-bottom: 1px solid #ddd;
+
+        }
+
+
+        .wishlist-header h1 {
+
+            margin: 0;
+
+            font-size: 26px;
+
+        }
+
+
+        .wishlist-count {
+
+            color: #878787;
+
+            font-size: 16px;
+
+            font-weight: normal;
+
+            margin-left: 8px;
+
+        }
+
+
+
+        /* =====================================================
+           WISHLIST LIST
+        ===================================================== */
+
+        #wishlistItems {
+
+            margin-top: 15px;
+
+        }
+
+
+        .wishlist-list {
+
+            background: white;
+
+        }
+
+
+        .wishlist-item {
+
+            min-height: 230px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 30px;
+
+            padding: 25px 30px;
+
+            border-bottom: 1px solid #eeeeee;
+
+            background: white;
+
+        }
+
+
+
+        /* =====================================================
+           IMAGE
+        ===================================================== */
+
+        .wishlist-image {
+
+            width: 180px;
+
+            height: 180px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: white;
+
+        }
+
+
+        .wishlist-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            display: block;
+
+        }
+
+
+        .wishlist-image-fallback {
+
+            width: 130px;
+
+            height: 130px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #2874f0;
+
+            font-size: 65px;
+
+        }
+
+
+
+        /* =====================================================
+           DETAILS
+        ===================================================== */
+
+        .wishlist-details {
+
+            flex: 1;
+
+            min-width: 0;
+
+        }
+
+
+        .wishlist-category {
+
+            color: #878787;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .wishlist-name {
+
+            margin: 0 0 12px;
+
+            font-size: 21px;
+
+            font-weight: 600;
+
+        }
+
+
+        .wishlist-price {
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .wishlist-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+
+        }
+
+
+        .wishlist-cart-btn {
+
+            border: none;
+
+            background: #fb641b;
+
+            color: white;
+
+            padding: 14px 25px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+        }
+
+
+        .wishlist-cart-btn:hover {
+
+            background: #e85b16;
+
+        }
+
+
+        .wishlist-remove-btn {
+
+            border: none;
+
+            background: transparent;
+
+            color: #2874f0;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+        }
+
+
+        .wishlist-remove-btn:hover {
+
+            color: #d32f2f;
+
+        }
+
+
+
+        /* =====================================================
+           ITEM TOTAL
+        ===================================================== */
+
+        .wishlist-item-total {
+
+            width: 150px;
+
+            flex-shrink: 0;
+
+            text-align: right;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            align-self: flex-start;
+
+            padding-top: 8px;
+
+        }
+
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-wishlist {
+
+            background: white;
+
+            text-align: center;
+
+            padding: 90px 20px;
+
+        }
+
+
+        .empty-wishlist i {
+
+            font-size: 75px;
+
+            color: #2874f0;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .empty-wishlist h2 {
+
+            margin: 10px 0;
+
+            font-size: 24px;
+
+        }
+
+
+        .empty-wishlist p {
+
+            color: #777;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .continue-shopping {
+
+            display: inline-block;
+
+            padding: 14px 30px;
+
+            background: #2874f0;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+        }
+
+
+        .continue-shopping:hover {
+
+            background: #1665d8;
+
+        }
+
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .wishlist-navbar {
+
+                padding: 0 15px;
+
+                gap: 12px;
+
+            }
+
+
+            .wishlist-logo {
+
+                font-size: 24px;
+
+            }
+
+
+            .wishlist-nav-link {
+
+                display: none;
+
+            }
+
+
+            .wishlist-item {
+
+                flex-wrap: wrap;
+
+                gap: 20px;
+
+            }
+
+
+            .wishlist-image {
+
+                width: 130px;
+
+                height: 130px;
+
+            }
+
+
+            .wishlist-item-total {
+
+                width: 100%;
+
+                text-align: left;
+
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="wishlist-navbar">
+
+
+    <a
+        href="{{ url_for('home') }}"
+        class="wishlist-logo"
+    >
+        Shop<span>Ease</span>
+    </a>
+
+
+
+    <form
+        class="wishlist-search"
+        action="{{ url_for('products') }}"
+        method="GET"
+    >
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search for products, brands and more"
+            autocomplete="off"
+        >
+
+
+        <button type="submit">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </button>
+
+    </form>
+
+
+
+    <a
+        href="{{ url_for('home') }}"
+        class="wishlist-nav-link"
+    >
+        Home
+    </a>
+
+
+<a
+    href="{{ url_for('cart') }}"
+    class="wishlist-nav-link cart-action"
+>
+    <div class="cart-icon-wrapper">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <b id="cartCount">0</b>
+    </div>
+
+    <span>Cart</span>
+</a>
+
+
+</header>
+
+
+
+<!-- =========================================================
+     PAGE
+========================================================= -->
+
+<main class="wishlist-page">
+
+
+    <div class="wishlist-header">
+
+        <h1>
+
+            My Wishlist
+
+            <span
+                id="wishlistCount"
+                class="wishlist-count"
+            >
+                0 items
+            </span>
+
+        </h1>
+
+    </div>
+
+
+
+    <div id="wishlistItems"></div>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   IMAGE URL
+========================================================= */
+
+function getCorrectImageUrl(image) {
+
+    if (!image) {
+        return "";
+    }
+
+
+    image =
+        String(image).trim();
+
+
+    if (!image) {
+        return "";
+    }
+
+
+    /*
+       Already correct
+    */
+
+    if (
+        image.startsWith("http://") ||
+        image.startsWith("https://") ||
+        image.startsWith("/static/") ||
+        image.startsWith("data:")
+    ) {
+
+        return image;
+
+    }
+
+
+    /*
+       Only filename stored
+    */
+
+    return "/static/uploads/products/" + image;
+
+}
+
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+function getWishlist() {
+
+    try {
+
+        const storageKey =
+            "shopEaseWishlist_user_" +
+            String(SHOP_EASE_USER_ID);
+
+        const saved =
+            localStorage.getItem(storageKey);
+
+        if (!saved) {
+            return [];
+        }
+
+        const wishlist =
+            JSON.parse(saved);
+
+        return Array.isArray(wishlist)
+            ? wishlist
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Wishlist error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function saveWishlist(wishlist) {
+
+    const storageKey =
+        "shopEaseWishlist_user_" +
+        String(SHOP_EASE_USER_ID);
+
+    localStorage.setItem(
+        storageKey,
+        JSON.stringify(wishlist)
+    );
+
+}
+
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+function getCart() {
+
+    try {
+
+          const storageKey =
+            "shopEaseCart_user_" +
+            String(SHOP_EASE_USER_ID);
+
+        const saved =
+            localStorage.getItem(
+                storageKey
+            );
+
+
+        if (!saved) {
+            return [];
+        }
+
+
+        const cart =
+            JSON.parse(saved);
+
+
+        return Array.isArray(cart)
+            ? cart
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Cart error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+function saveCart(cart) {
+
+    const storageKey =
+        "shopEaseCart_user_" +
+        String(SHOP_EASE_USER_ID);
+
+    localStorage.setItem(
+        storageKey,
+        JSON.stringify(cart)
+    );
+
+}
+function updateCartCount() {
+
+    const cart = getCart();
+
+    let totalQuantity = 0;
+
+    cart.forEach(function(item) {
+
+        totalQuantity += Number(item.quantity || 1);
+
+    });
+
+    const cartCount = document.getElementById("cartCount");
+
+    if (cartCount) {
+
+        cartCount.textContent = totalQuantity;
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(value ?? "");
+
+    return div.innerHTML;
+
+}
+
+
+
+/* =========================================================
+   ADD WISHLIST PRODUCT TO CART
+========================================================= */
+
+function addWishlistToCart(index) {
+
+    const wishlist =
+        getWishlist();
+
+
+    const item =
+        wishlist[index];
+
+
+    if (!item) {
+        return;
+    }
+
+
+    const id =
+        Number(item.id);
+
+
+    const name =
+        item.name || "Product";
+
+
+    const price =
+        Number(item.price || 0);
+
+
+    const image =
+        getCorrectImageUrl(
+            item.image
+        );
+
+
+    let cart =
+        getCart();
+
+
+    const existing =
+        cart.find(function(cartItem) {
+
+            return Number(cartItem.id) === id;
+
+        });
+
+
+    if (existing) {
+
+        existing.quantity =
+            Number(existing.quantity || 1) + 1;
+
+
+        if (!existing.image && image) {
+
+            existing.image =
+                image;
+
+        }
+
+    } else {
+
+        cart.push({
+
+            id: id,
+
+            name: name,
+
+            price: price,
+
+            image: image,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    saveCart(cart);
+
+
+    alert(
+        name +
+        " added to cart!"
+    );
+
+}
+
+
+
+/* =========================================================
+   REMOVE
+========================================================= */
+
+function removeWishlistItem(index) {
+
+    const wishlist =
+        getWishlist();
+
+
+    if (
+        index < 0 ||
+        index >= wishlist.length
+    ) {
+
+        return;
+
+    }
+
+
+    const name =
+        wishlist[index].name ||
+        "Product";
+
+
+    wishlist.splice(
+        index,
+        1
+    );
+
+
+    saveWishlist(
+        wishlist
+    );
+
+
+    renderWishlist();
+
+}
+
+
+
+/* =========================================================
+   IMAGE ERROR
+========================================================= */
+
+function wishlistImageError(image) {
+
+    if (!image) {
+        return;
+    }
+
+
+    const container =
+        image.parentElement;
+
+
+    if (!container) {
+        return;
+    }
+
+
+    image.style.display =
+        "none";
+
+
+    if (
+        container.querySelector(
+            ".wishlist-image-fallback"
+        )
+    ) {
+        return;
+    }
+
+
+    const fallback =
+        document.createElement("div");
+
+
+    fallback.className =
+        "wishlist-image-fallback";
+
+
+    fallback.innerHTML =
+        '<i class="fa-solid fa-box-open"></i>';
+
+
+    container.appendChild(
+        fallback
+    );
+
+}
+
+
+
+/* =========================================================
+   RENDER WISHLIST
+========================================================= */
+
+function renderWishlist() {
+
+    const container =
+        document.getElementById(
+            "wishlistItems"
+        );
+
+
+    const countElement =
+        document.getElementById(
+            "wishlistCount"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const wishlist =
+        getWishlist();
+
+
+    /* COUNT */
+
+    if (countElement) {
+
+        countElement.textContent =
+            wishlist.length +
+            (
+                wishlist.length === 1
+                ? " item"
+                : " items"
+            );
+
+    }
+
+
+
+    /* =====================================================
+       EMPTY
+    ====================================================== */
+
+    if (wishlist.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-wishlist">
+
+                <i class="fa-regular fa-heart"></i>
+
+                <h2>
+                    Your Wishlist is Empty
+                </h2>
+
+                <p>
+                    Save products you love here.
+                </p>
+
+                <a
+                    href="{{ url_for('products', category='all') }}"
+                    class="continue-shopping"
+                >
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    /* =====================================================
+       PRODUCTS
+    ====================================================== */
+
+    let html = `
+
+        <div class="wishlist-list">
+
+    `;
+
+
+    wishlist.forEach(
+        function(item, index) {
+
+            const name =
+                item.name ||
+                "Product";
+
+
+            const price =
+                Number(
+                    item.price || 0
+                );
+
+
+            const image =
+                getCorrectImageUrl(
+                    item.image
+                );
+
+
+            html += `
+
+                <article class="wishlist-item">
+
+
+                    <!-- IMAGE -->
+
+                    <div class="wishlist-image">
+
+                        ${
+                            image
+                            ?
+                            `
+                                <img
+                                    src="${escapeHtml(image)}"
+                                    alt="${escapeHtml(name)}"
+                                    onerror="wishlistImageError(this)"
+                                >
+                            `
+                            :
+                            `
+                                <div class="wishlist-image-fallback">
+
+                                    <i class="fa-solid fa-box-open"></i>
+
+                                </div>
+                            `
+                        }
+
+                    </div>
+
+
+
+                    <!-- DETAILS -->
+
+                    <div class="wishlist-details">
+
+
+                        <div class="wishlist-category">
+                            Product
+                        </div>
+
+
+                        <h2 class="wishlist-name">
+
+                            ${escapeHtml(name)}
+
+                        </h2>
+
+
+                        <div class="wishlist-price">
+
+                            ₹${price.toLocaleString("en-IN")}
+
+                        </div>
+
+
+
+                        <div class="wishlist-actions">
+
+
+                            <button
+                                type="button"
+                                class="wishlist-cart-btn"
+                                onclick="addWishlistToCart(${index})"
+                            >
+
+                                <i class="fa-solid fa-cart-shopping"></i>
+
+                                ADD TO CART
+
+                            </button>
+
+
+
+                            <button
+                                type="button"
+                                class="wishlist-remove-btn"
+                                onclick="removeWishlistItem(${index})"
+                            >
+
+                                <i class="fa-solid fa-trash"></i>
+
+                                REMOVE
+
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PRICE -->
+
+                    <div class="wishlist-item-total">
+
+                        ₹${price.toLocaleString("en-IN")}
+
+                    </div>
+
+
+                </article>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+        </div>
+
+    `;
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+
+/* =========================================================
+   PAGE LOAD
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        renderWishlist();
+
+         updateCartCount();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

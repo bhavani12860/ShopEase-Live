@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account - ShopEase</title>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='auth.css') }}">
+
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-left">
+
+        <div class="brand">
+            Shop<span>Ease</span>
+        </div>
+
+        <h1>Join ShopEase</h1>
+
+        <p>
+            Create your account and start shopping
+            from thousands of products.
+        </p>
+
+        <div class="benefits">
+
+            <div>
+                <span>🛍️</span>
+                <p>Thousands of Products</p>
+            </div>
+
+            <div>
+                <span>🚚</span>
+                <p>Fast Delivery</p>
+            </div>
+
+            <div>
+                <span>🔒</span>
+                <p>Secure Shopping</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="auth-right">
+
+        <div class="auth-card">
+
+            <h2>Create Account</h2>
+
+            <p class="subtitle">
+                Sign up to start shopping
+            </p>
+
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="message {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <form method="POST"
+                  action="{{ url_for('register') }}"
+                  onsubmit="return validateRegister()">
+
+
+               <div class="input-group">
+
+    <label>Full Name</label>
+
+    <div class="input-icon-wrapper">
+
+        <i class="fa-solid fa-user input-icon"></i>
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Enter your full name"
+            required>
+
+    </div>
+
+</div>
+
+
+               <div class="input-group">
+
+    <label>Email Address</label>
+
+    <div class="input-icon-wrapper">
+
+        <i class="fa-solid fa-envelope input-icon"></i>
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            required>
+
+    </div>
+
+</div>
+                <div class="input-group">
+
+    <label>Password</label>
+
+    <div class="password-field">
+
+        <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Create a password"
+            required>
+
+        <button
+            type="button"
+            class="password-toggle"
+            onclick="togglePassword('password', this)">
+
+            <span>👁</span>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+               <div class="input-group">
+
+    <label>Confirm Password</label>
+
+    <div class="password-field">
+
+        <input
+            type="password"
+            name="confirm_password"
+            id="confirm_password"
+            placeholder="Confirm your password"
+            required>
+
+        <button
+            type="button"
+            class="password-toggle"
+            onclick="togglePassword('confirm_password', this)">
+
+            <span>👁</span>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+                <button type="submit"
+                        class="auth-button">
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+
+            <p class="switch">
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+            </p>
+
+
+            <a href="{{ url_for('home') }}"
+               class="back-home">
+
+                ← Back to ShopEase
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='auth.js') }}"></script>
+
+</body>
+</html>

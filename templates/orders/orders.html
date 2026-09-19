@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders - ShopEase</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Your existing CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='orders.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <a href="{{ url_for('home') }}"
+       class="logo">
+
+        Shop<span>Ease</span>
+
+    </a>
+
+
+    <a href="{{ url_for('home') }}"
+       class="home">
+
+        <i class="fa-solid fa-house"></i>
+
+        Home
+
+    </a>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+    <h1 class="title">
+        My Orders
+    </h1>
+
+
+
+    {% if orders %}
+
+
+        {% for order in orders %}
+
+
+            <div class="order-card">
+
+
+                <!-- =========================
+                     ORDER HEADER
+                ========================= -->
+
+                <div class="order-top">
+
+
+                    <div>
+
+                        <div class="order-id">
+
+                            Order #SE{{ order.id }}
+
+                        </div>
+
+
+                        <div class="order-date">
+
+                            Ordered on:
+                            {{ order.created_at }}
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         STATUS
+                    ========================= -->
+
+                    {% if order.status == 'Cancelled' %}
+
+                        <div class="status cancelled">
+
+                            <i class="fa-solid fa-circle-xmark"></i>
+
+                            Cancelled
+
+                        </div>
+
+
+                    {% elif order.status == 'Return Requested' %}
+
+                        <div class="status return-status">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                            Return Requested
+
+                        </div>
+
+
+                    {% elif order.status == 'Returned' %}
+
+                        <div class="status return-status">
+
+                            <i class="fa-solid fa-rotate-left"></i>
+
+                            Returned
+
+                        </div>
+
+
+                    {% elif order.status == 'Delivered' %}
+
+                        <div class="status">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            Delivered
+
+                        </div>
+
+
+                    {% else %}
+
+                        <div class="status">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            {{ order.status }}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- =========================
+                     PRODUCT
+                ========================= -->
+
+                {% if order.first_item %}
+
+
+                    <div class="order-body">
+
+
+                        <!-- PRODUCT IMAGE -->
+
+                        <div class="product-image-box">
+
+
+                            {% if order.first_item.image %}
+
+                                <img
+                                    src="{{ order.first_item.image_url }}"
+                                    class="product-image"
+                                    alt="{{ order.first_item.name }}"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                                >
+
+                                <i
+                                    class="fa-solid fa-box no-image"
+                                    style="display:none;"
+                                ></i>
+
+                            {% else %}
+
+                                <i
+                                    class="fa-solid fa-box no-image"
+                                ></i>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+
+                        <!-- PRODUCT INFO -->
+
+                        <div class="product-info">
+
+
+                            <div class="product-name">
+
+                                {{ order.first_item.name }}
+
+                            </div>
+
+
+
+                            {% if order.first_item.description %}
+
+                                <div class="description">
+
+                                    {{ order.first_item.description }}
+
+                                </div>
+
+                            {% endif %}
+
+
+
+                            {% if order.first_item.rating is not none %}
+
+                                <div class="rating">
+
+                                    {{ order.first_item.rating }}
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                </div>
+
+                            {% endif %}
+
+
+
+                            <div class="quantity">
+
+                                Quantity:
+
+                                <strong>
+                                    {{ order.first_item.quantity }}
+                                </strong>
+
+                            </div>
+
+
+
+                            {% if order.first_item.price is not none %}
+
+                                <div class="item-price">
+
+                                    ₹{{ "%.2f"|format(
+                                        order.first_item.price|float
+                                    ) }}
+
+                                </div>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+
+                        <!-- ORDER TOTAL -->
+
+                        <div class="order-total">
+
+
+                            <div class="total-label">
+
+                                Total Amount
+
+                            </div>
+
+
+                            <div class="total-price">
+
+                                ₹{{ "%.2f"|format(
+                                    order.total_amount|float
+                                ) }}
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- =========================
+                     ACTION BUTTONS
+                ========================= -->
+
+                <div class="buttons">
+
+
+                    <!-- VIEW DETAILS -->
+
+                    <a
+                        href="{{ url_for(
+                            'orders.order_details',
+                            order_id=order.id
+                        ) }}"
+                        class="btn details"
+                    >
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                        View Details
+
+                    </a>
+
+
+
+                    <!-- TRACK ORDER -->
+
+                    {% if order.status not in [
+                        'Cancelled',
+                        'Return Requested',
+                        'Returned'
+                    ] %}
+
+                        <a
+                            href="{{ url_for(
+                                'orders.track_order',
+                                order_id=order.id
+                            ) }}"
+                            class="btn track"
+                        >
+
+                            <i class="fa-solid fa-truck"></i>
+
+                            Track Order
+
+                        </a>
+
+                    {% endif %}
+
+
+
+                    <!-- =========================
+                         CANCEL ORDER
+                    ========================= -->
+
+                    {% if order.status in [
+                        'Placed',
+                        'Pending',
+                        'Confirmed',
+                        'Order Placed',
+                        'Processing'
+                    ] %}
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'orders.cancel_order',
+                                order_id=order.id
+                            ) }}"
+                            onsubmit="return confirm(
+                                'Are you sure you want to cancel this order?'
+                            );"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn cancel"
+                            >
+
+                                <i class="fa-solid fa-xmark"></i>
+
+                                Cancel Order
+
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+
+
+                    <!-- =========================
+                         RETURN ORDER
+                    ========================= -->
+
+                    {% if order.status == 'Delivered' %}
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'orders.return_order',
+                                order_id=order.id
+                            ) }}"
+                            onsubmit="return confirm(
+                                'Do you want to request a return for this order?'
+                            );"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn return"
+                            >
+
+                                <i class="fa-solid fa-rotate-left"></i>
+
+                                Return
+
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+
+
+                    <!-- =========================
+                         RETURN REQUESTED
+                    ========================= -->
+
+                    {% if order.status == 'Return Requested' %}
+
+                        <span class="btn return-status-btn">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                            Return Requested
+
+                        </span>
+
+                    {% endif %}
+
+
+
+                    <!-- =========================
+                         RETURNED
+                    ========================= -->
+
+                    {% if order.status == 'Returned' %}
+
+                        <span class="btn return-status-btn">
+
+                            <i class="fa-solid fa-rotate-left"></i>
+
+                            Returned
+
+                        </span>
+
+                    {% endif %}
+
+
+
+                    <!-- =========================
+                         CANCELLED
+                    ========================= -->
+
+                    {% if order.status == 'Cancelled' %}
+
+                        <span class="btn cancelled-btn">
+
+                            <i class="fa-solid fa-circle-xmark"></i>
+
+                            Cancelled
+
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+        {% endfor %}
+
+
+
+    {% else %}
+
+
+        <!-- =========================
+             NO ORDERS
+        ========================= -->
+
+        <div class="empty">
+
+
+            <i class="fa-solid fa-box-open"></i>
+
+
+            <h2>
+                No Orders Yet
+            </h2>
+
+
+            <p>
+                Your placed orders will appear here.
+            </p>
+
+
+            <a
+                href="{{ url_for('home') }}"
+                class="shop-btn"
+            >
+
+                Continue Shopping
+
+            </a>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+</main>
+
+
+<!-- Your existing JS -->
+<script src="{{ url_for('static', filename='orders.js') }}"></script>
+
+</body>
+
+</html>
