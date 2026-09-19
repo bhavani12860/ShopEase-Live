@@ -5,6 +5,12 @@ Python Flask, MySQL, HTML, CSS, and JavaScript. The application provides
 a modern online shopping experience inspired by popular e-commerce
 platforms.
 
+# ShopEase - Online Shopping Web Application
+
+🔗 **Live Demo:** https://shopease-5z4p.onrender.com
+
+ShopEase is a full-stack e-commerce web application developed using Python Flask, MySQL, HTML, CSS, and JavaScript.
+
 Features
 ---
 
